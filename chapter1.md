@@ -135,13 +135,14 @@
 > * GitHub 用于源代码管理，参考:
 >   * [https://medium.com/appliedcode/setup-github-account-9a5ec918bcc1](https://medium.com/appliedcode/setup-github-account-9a5ec918bcc1)
 > * AWS 和 Azure 账号用于应用部署，参考:
+>
 >   * AWS:[https://medium.com/appliedcode/setup-aws-account-1727ce89353e](https://medium.com/appliedcode/setup-aws-account-1727ce89353e.)
 >
 >   * Azure:[https://medium.com/appliedcode/setup-microsoft-azure-account-cbd635ebf14b](https://medium.com/appliedcode/setup-microsoft-azure-account-cbd635ebf14b)
 
 ### 安装 Git
 
-> Git\(https://git-scm.com\)是一款免费的开源分布式版本控制系统，旨在快速高效的处理所有小型或大型项目。
+> Git\([https://git-scm.com\)是一款免费的开源分布式版本控制系统，旨在快速高效的处理所有小型或大型项目。](https://git-scm.com%29是一款免费的开源分布式版本控制系统，旨在快速高效的处理所有小型或大型项目。)
 >
 > 下略……
 
@@ -153,19 +154,22 @@
 
 > 此处书中分别讲了几个常见命令，但看起来比较混乱，还是从别处摘抄写别人的东西吧。
 >
-> 这里主要参考 [https://www.cnblogs.com/wuer888/p/7655856.html](https://www.cnblogs.com/wuer888/p/7655856.html)
-> 基本步骤如下:
-> 1. 在 github.com 上新建名为 test 的 Respositories，假设 url 为 https://github.com/heroage/test
+> 这里主要参考 [https://www.cnblogs.com/wuer888/p/7655856.html](https://www.cnblogs.com/wuer888/p/7655856.html)  
+> 基本步骤如下:  
+> 1. 在 github.com 上新建名为 test 的 Respositories，假设 url 为 [https://github.com/heroage/test](https://github.com/heroage/test)  
 > 2. 本地新建软件仓库，并添加远程仓库
->    ```
+>
+> ```
 >    1 software@debian:~$ mkdir test
 >    2 software@debian:~$ cd test/
 >    3 software@debian:test~/t$ ls
 >    4 software@debian:~/test$ git init
 >    5 Initialized empty Git repository in /home/software/test/.git/
 >    6 software@debian:~/test$ git remote add https://github.com/heroage/test/.git
->    ```
-> 3. 向本地 Respositories 提交修改的文件
+> ```
+>
+> 1. 向本地 Respositories 提交修改的文件
+>
 >    ```
 >    1 software@debian:~/test$ echo "our first git repository" >> file
 >    2 software@debian:~/test$ ls
@@ -175,7 +179,7 @@
 >    6 [master (root-commit) 0c72641] the first file to commit
 >    7  1 files changed, 1 insertions(+), 0 deletions(-)
 >    8  create mode 100644 file
->    9 software@debian:~/test$ 
+>    9 software@debian:~/test$
 >    ```
 >
 >    > **命令解释**  
@@ -185,21 +189,24 @@
 >    >
 >    > 第5行：将索引库中的内容向git仓库进行提交。这步之后文件file才算真正提交到拉git仓库中。双引号中的内容是根据每次修改的不同内容，根据实际情况去填写。
 >    >
->    > 　　git commit -a -m ""
+>    > git commit -a -m ""
 >    >
->    > 　　git commit -am ""
+>    > git commit -am ""
 >    >
 >    > 这条命令可以一次性提交修改的 Respositories 文件\(即已经 add 过的文件\)。
-> 4. 将本地软件仓库内容推送到远端软件仓库
+>
+> 2. 将本地软件仓库内容推送到远端软件仓库
+>
 >    ```
 >    1 software@debian:~/test$ git push origin master
 >    2 heroage@sina.com's password: 
 >    3 Everything up-to-date
->    4 software@debian:~/test$ 
+>    4 software@debian:~/test$
 >    ```
 >
 >    > 第1行:将本地master分支跟踪到远程分支，在 git 仓库建立之初就会有一个默认的 master 分支，当然你如果建立了其他分支，也可以用同样的方法去跟踪。
-> 5. 测试
+>
+> 3. 测试
 >    ```
 >     1 software@debian:~/test$ git remote show origin
 >     2 heroage@sina.com's password: 
@@ -211,9 +218,9 @@
 >     8     master tracked
 >     9   Local ref configured for 'git push':
 >    10     master pushes to master (up to date)
->    11 software@debian:~/test$ 
+>    11 software@debian:~/test$
 >    ```
-> 6. 在其他计算机执行 clone
+> 4. 在其他计算机执行 clone
 >    ```
 >     1 root@test-VirtualBox:~# ls
 >     2 bin  gittest  read_temp
@@ -229,7 +236,7 @@
 >    12 root@test-VirtualBox:~# cd test/
 >    13 root@test-VirtualBox:~/test# ls
 >    14 file
->    15 root@test-VirtualBox:~/test# 
+>    15 root@test-VirtualBox:~/test#
 >    ```
 
 
