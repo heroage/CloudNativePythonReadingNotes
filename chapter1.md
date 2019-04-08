@@ -124,9 +124,113 @@
 > * **进程状态管理**: 进程可以在极短的时间内迅速成倍增加，随后立即正常关闭。在这些确保了快速扩展、变更部署和灾难恢复的能力。
 > * **持续发布/部署用于生产**: 尽可能的保持在开发、阶段发布或生产阶段环境的相似。这样可以确保在不同环境下获得类似的结果，确保从开发到产品的交付顺利。
 > * **日志即事件流**: 不论是平台日志还是应用日志都很重要，这些日志都有助于了解应用的活动状况。通过各类归集服务，确保能够正常收集、汇聚、索引和分析不同环境下\(最好是生产环境\)的事件。
-> * **作为一次性进程的临时任务\(Ad hoc tasks\)**: In the cloud native approach, management tasks \(for example, database migration\) that run as a part of a release should be run as one-off processes into the environment as opposed to the regular app with long-running processes.在云原生方法中，作为版本发布一部分的管理任务\(例如数据库迁移\)，应当作为一次性进程运行，而不是像通常应用那样长时间运行。
+> * **作为一次性进程的临时任务\(Ad hoc tasks\)**: 在云原生方案中，作为版本发布一部分的管理任务\(例如数据库迁移\)，应当作为一次性进程运行\(即执行完即退出\)，而不是像通常应用那样长时间运行。
 >
-> Considering all these standards and integrating applications with steady engineering interfaces, that is, handling stateless outline design, makes disseminated applications that are cloud prepared. Python revolutionized application systems with its obstinate, tradition-over-setup way to deal with web improvements.
+> 考虑以上标准，并使用稳定的工程接口集成应用程序，就是说，通过无状态框架设计的运用，以便发布程序能够适应云端要求。Python 通过其固有的、习惯先于配置\(tradition-over-setup\)的方式革新了应用系统，加速了 Web 开发。
+
+## 设置 Python 环境
+
+> 创建账号指南
+>
+> * GitHub 用于源代码管理，参考:
+>   * [https://medium.com/appliedcode/setup-github-account-9a5ec918bcc1](https://medium.com/appliedcode/setup-github-account-9a5ec918bcc1)
+> * AWS 和 Azure 账号用于应用部署，参考:
+>   * AWS:[https://medium.com/appliedcode/setup-aws-account-1727ce89353e](https://medium.com/appliedcode/setup-aws-account-1727ce89353e.)
+>
+>   * Azure:[https://medium.com/appliedcode/setup-microsoft-azure-account-cbd635ebf14b](https://medium.com/appliedcode/setup-microsoft-azure-account-cbd635ebf14b)
+
+### 安装 Git
+
+> Git\(https://git-scm.com\)是一款免费的开源分布式版本控制系统，旨在快速高效的处理所有小型或大型项目。
+>
+> 下略……
+
+#### 安装和配置Python
+
+> 下略……
+
+### 熟悉 GitHub 和 Git 命令
+
+> 此处书中分别讲了几个常见命令，但看起来比较混乱，还是从别处摘抄写别人的东西吧。
+>
+> 这里主要参考 [https://www.cnblogs.com/wuer888/p/7655856.html](https://www.cnblogs.com/wuer888/p/7655856.html)
+> 基本步骤如下:
+> 1. 在 github.com 上新建名为 test 的 Respositories，假设 url 为 https://github.com/heroage/test
+> 2. 本地新建软件仓库，并添加远程仓库
+>    ```
+>    1 software@debian:~$ mkdir test
+>    2 software@debian:~$ cd test/
+>    3 software@debian:test~/t$ ls
+>    4 software@debian:~/test$ git init
+>    5 Initialized empty Git repository in /home/software/test/.git/
+>    6 software@debian:~/test$ git remote add https://github.com/heroage/test/.git
+>    ```
+> 3. 向本地 Respositories 提交修改的文件
+>    ```
+>    1 software@debian:~/test$ echo "our first git repository" >> file
+>    2 software@debian:~/test$ ls
+>    3 file
+>    4 software@debian:~/test$ git add file
+>    5 software@debian:~/test$ git commit -m "the first file to commit" file
+>    6 [master (root-commit) 0c72641] the first file to commit
+>    7  1 files changed, 1 insertions(+), 0 deletions(-)
+>    8  create mode 100644 file
+>    9 software@debian:~/test$ 
+>    ```
+>
+>    > **命令解释**  
+>    > 我们在仓库中新建了一个文件file，作为我们的示例文件。
+>    >
+>    > 第4行：将file文件的信息添加到git仓库的索引库中，并没有真正添加到库。当然上例中的file文件只是我们的示例，它是一个路径，可以是文件，也可以是目录。
+>    >
+>    > 第5行：将索引库中的内容向git仓库进行提交。这步之后文件file才算真正提交到拉git仓库中。双引号中的内容是根据每次修改的不同内容，根据实际情况去填写。
+>    >
+>    > 　　git commit -a -m ""
+>    >
+>    > 　　git commit -am ""
+>    >
+>    > 这条命令可以一次性提交修改的 Respositories 文件\(即已经 add 过的文件\)。
+> 4. 将本地软件仓库内容推送到远端软件仓库
+>    ```
+>    1 software@debian:~/test$ git push origin master
+>    2 heroage@sina.com's password: 
+>    3 Everything up-to-date
+>    4 software@debian:~/test$ 
+>    ```
+>
+>    > 第1行:将本地master分支跟踪到远程分支，在 git 仓库建立之初就会有一个默认的 master 分支，当然你如果建立了其他分支，也可以用同样的方法去跟踪。
+> 5. 测试
+>    ```
+>     1 software@debian:~/test$ git remote show origin
+>     2 heroage@sina.com's password: 
+>     3 * remote origin
+>     4   Fetch URL: https://github.com/heroage/test/.git
+>     5   Push  URL: https://github.com/heroage/test/.git
+>     6   HEAD branch: master
+>     7   Remote branch:
+>     8     master tracked
+>     9   Local ref configured for 'git push':
+>    10     master pushes to master (up to date)
+>    11 software@debian:~/test$ 
+>    ```
+> 6. 在其他计算机执行 clone
+>    ```
+>     1 root@test-VirtualBox:~# ls
+>     2 bin  gittest  read_temp
+>     3 root@test-VirtualBox:~# git clone https://github.com/heroage/test/.git
+>     4 Cloning into test...
+>     5 heroage@sina.com's password: 
+>     6 remote: Counting objects: 9, done.
+>     7 remote: Compressing objects: 100% (3/3), done.
+>     8 remote: Total 9 (delta 0), reused 0 (delta 0)
+>     9 Receiving objects: 100% (9/9), done.
+>    10 root@test-VirtualBox:~# ls
+>    11 bin  gittest  read_temp  test
+>    12 root@test-VirtualBox:~# cd test/
+>    13 root@test-VirtualBox:~/test# ls
+>    14 file
+>    15 root@test-VirtualBox:~/test# 
+>    ```
 
 
 
