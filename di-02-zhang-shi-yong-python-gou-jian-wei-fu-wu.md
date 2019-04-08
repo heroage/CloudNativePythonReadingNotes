@@ -63,6 +63,21 @@
 > $ echo "Flask==0.10.1" >>  requirements.txt
 > $ pip install -r requirements.txt
 > ```
+>
+> 依赖性安装完成后，传建一个 app.py 文件，包含以下内容:
+>
+> ```py
+> from flask import Flask
+> app = Flask(__name__)
+> if __name__ == "__main__":
+>     app.run(host='0.0.0.0', port=5000, debug=True)
+> ```
+>
+> 尝试运行程序，查看程序是否工作正常，执行下面的命令:
+>
+> ```
+> $ python app.py
+> ```
 
 
 
