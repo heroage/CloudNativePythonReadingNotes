@@ -19,7 +19,7 @@
 
 > 本书使用 Flask 作为 Web 框架。
 >
-> 我在 github 上创建了账号，并创建代码库: https://github.com/heroage/Cloud-Native-Python.git
+> 我在 github 上创建了账号，并创建代码库: [https://github.com/heroage/Cloud-Native-Python.git](https://github.com/heroage/Cloud-Native-Python.git)
 >
 > 我们使用以下命令在本地创建代码库，并 push 到 github 代码库:
 >
@@ -55,6 +55,13 @@
 > ```
 > $ virtualenv env --no-site-packages --python=python3
 > $ source env/bin/activate
+> ```
+>
+> 完成 virtualenv 的安装后，还需要为虚拟环境安装一个依赖软件，即 Flask\(0.10.1\)。使用以下命令:
+>
+> ```
+> $ echo "Flask==0.10.1" >>  requirements.txt
+> $ pip install -r requirements.txt
 > ```
 
 
