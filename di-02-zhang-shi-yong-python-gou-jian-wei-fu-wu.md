@@ -78,6 +78,25 @@
 > ```
 > $ python app.py
 > ```
+>
+> 至此，在继续构建 RESTful API 之前，我们先明确待构建 RESTful API 的根 URL 以及各 URI 要实现的功能:
+>
+> **根 URL: **
+>
+> ```
+> http://localhost:5000/api/v1
+> ```
+>
+> **URI功能说明:**
+>
+> | **HTTP Method** | **URI** | 动作 |
+> | :---: | :--- | :--- |
+> | GET | http://localhost:5000/api/v1/info | 返回版本 |
+> | GET | http://localhost:5000/api/v1/users | 返回用户列表 |
+> | GET | http://localhost:5000/api/v1/users/\[user\_id\] | 根据 user\_id 返回用户详细信息 |
+> | POST | http://localhost:5000/api/v1/users | 根据传入对象值，在后台创建新用户 |
+> | DELETE | http://localhost:5000/api/v1/users | 根据传入的 JSON 格式文本中指定的 username 删除用户 |
+> | PUT | http://localhost:5000/api/v1/users/\[user\_id\] | 基于 API 调用传入的 JSON 对象中的信息，更新指定 user\_id 的信息。 |
 
 
 
