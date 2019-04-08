@@ -31,6 +31,18 @@
 * PaaS 供应商提供平台，同时提供围绕该平台的服务。
 * PaaS 供应商包括 Amazon Web Servies\(AWS Elastic Beanstalk\)、微软 Azure\(Azure Websites\)、Google App Engine 和 Oracle\(Big Data Cloud Service\)
 
+### 基础设施即服务
+
+> IaaS 要点
+
+* IaaS 向客户提供 IT 资源，例如运行应用程序的裸机、用于存储的硬盘盒用于联网的网络电缆，这些资源都可以根据客户业务模型定制。
+* 使用 IaaS 产品的客户，必须自行管理应用程序/资源的安全性，并自行构建用于处理突发性故障/崩溃的灾难恢复模型。
+* 在 IaaS 中，服务是按需提供的，因此客户需要对资源进行成本分析，以免超出预算。
+* 允许客户/消费者根据应用程序需求定制其基础架构，因此可以快速、高效地销毁并重建。
+* 基于 IaaS 的服务计费模型是按需付费，这就意味着用户需要按其规划付费\(即向服务商需求多少资源，就支付相应费用\)。客户需要按其需求的资源，以及使用资源的时长付费。
+
+* Amazon Web Servies，提供 亚马逊弹性计算云\(Amazon EC2\)和亚马逊简易存储服务\(Amazon S3\)，是 IaaS 最大的供应商；而 Microsoft Azure\(虚拟机\)、Rackspace\(虚拟云服务器\)和 Oracle\(裸机云服务\)也有这类产品。
+
 ## 云原生的概念
 
 > 云原生是一种团队、文化和技术组织形式，利用自动化工具和架构来管理软件复杂度和加速软件交付。
@@ -207,6 +219,7 @@
 >    > 第1行:将本地master分支跟踪到远程分支，在 git 仓库建立之初就会有一个默认的 master 分支，当然你如果建立了其他分支，也可以用同样的方法去跟踪。
 >
 > 3. 测试
+>
 >    ```
 >     1 software@debian:~/test$ git remote show origin
 >     2 heroage@sina.com's password: 
@@ -220,6 +233,7 @@
 >    10     master pushes to master (up to date)
 >    11 software@debian:~/test$
 >    ```
+>
 > 4. 在其他计算机执行 clone
 >    ```
 >     1 root@test-VirtualBox:~# ls
