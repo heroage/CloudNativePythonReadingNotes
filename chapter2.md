@@ -79,7 +79,7 @@
 > $ python app.py
 > ```
 >
-> 至此，在继续构建 RESTful API 之前，我们先明确待构建 RESTful API 的根 URL 以及各 URI 要实现的功能:
+> 至此，在继续构建 RESTful API 之前，我们先明确待构建 RESTful API 的根 URL，并对 API 要实现的功能进行规划，定义各 URI 要实现的功能:
 >
 > **根 URL: **
 >
@@ -97,6 +97,54 @@
 > | POST | [http://localhost:5000/api/v1/users](http://localhost:5000/api/v1/users) | 根据传入对象值，在后台创建新用户 |
 > | DELETE | [http://localhost:5000/api/v1/users](http://localhost:5000/api/v1/users) | 根据传入的 JSON 格式文本中指定的 username 删除用户 |
 > | PUT | [http://localhost:5000/api/v1/users/\\[user\_id\\]](http://localhost:5000/api/v1/users/[user_id]%28http://localhost:5000/api/v1/users/[user_id%29\) | 基于 API 调用传入的 JSON 对象中的信息，更新指定 user\_id 的信息。 |
+
+### 创建第一个资源: /api/v1/info
+
+> 首先在 SQLite3 中创建一个 apirelease 的表结构，其中包含 API 版本和发布信息。运行下列命令:
+>
+> ```
+> CREATE TABLE apirelease(
+>     buildtime date,
+>     version varchar(30) primary key,
+>     links varchar2(30), methods varchar2(30));
+>
+> Insert into apirelease values ('2017-01-01 10:00:00', "v1", "/api/v1/users", "get, post, put, delete");
+>
+> .save /mydir/mydb.db
+> ```
+>
+> 然后，在 app.py 中定义函数和路由 /api/vi/info，用于处理对 /api/v1/info 路径的 RESTful 调用。
+>
+> ```
+> # app.py
+>
+> from flask import Flask, jsonify
+> import json
+> import sqlite3
+>
+> app = Flask(__name__)
+>
+> @app.route('/api/v1/info')
+> def home_index():
+>         conn = sqlite3.connect('/mydir/mydb.db')
+>         print('Opened database successfully')
+>         api_list = []
+>         cursor = conn.execute('SELECT buildtime, version, methods, links from apirelease')
+>         for row in cursor:
+>                 api = {}
+>                 api['version'] = row[0]
+>                 api['buildtime'] = row[1]
+>                 api['methods'] = row[2]
+>                 api['links'] = row[3]
+>                 api_list.append(api)
+>                 conn.close()
+>                 return jsonify({'api_version': api_list}), 200
+>
+> if __name__ == "__main__":
+>         app.run(host='0.0.0.0', port=5000, debug=True)
+> ```
+
+
 
 
 
