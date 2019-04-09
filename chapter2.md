@@ -127,7 +127,7 @@
 > @app.route('/api/v1/info')
 > def home_index():
 >         conn = sqlite3.connect('/mydir/mydb.db')
->         print('Opened database successfully')
+>         print('Opened database successfully')###
 >         api_list = []
 >         cursor = conn.execute('SELECT buildtime, version, methods, links from apirelease')
 >         for row in cursor:
@@ -137,14 +137,101 @@
 >                 api['methods'] = row[2]
 >                 api['links'] = row[3]
 >                 api_list.append(api)
->                 conn.close()
->                 return jsonify({'api_version': api_list}), 200
+>         conn.close()
+>         return jsonify({'api_version': api_list}), 200
 >
 > if __name__ == "__main__":
 >         app.run(host='0.0.0.0', port=5000, debug=True)
 > ```
+>
+> 完成以上工作，就可以使用浏览器或 telnet 终端访问 http://localhost:5000/api/v1/info，执行 RESTful 调用了。
 
+### 构建 user 资源的方法
 
+> 为 user 定义如下字段:
+>
+> * id
+> * username
+> * emailid
+> * password
+> * full\_name
+>
+> 使用下列命令在 SQLite 中创建 users 表结构:
+> ```
+> .open /mydir/mydb.db
+>
+> CREATE TABLE users(
+>     username varchar2(30),
+>     email varchar2(30),
+>     password varchar2(30),
+>     full_name varchar(30),
+>     id integer primary key autoincrement);
+> ```
+
+#### GET /api/v1/users
+
+> 在 app.py 中增加如下代码:
+>
+> ```
+> @app.route('/api/v1/users', methods=['GET'])
+> def get_users():
+>         return list_users()
+>
+> def list_users():
+>         conn = sqlite3.connect('/home/mike/mydb.db')
+>         print('Opened database successfully')
+>         api_list = []
+>         cursor = conn.execute('SELECT username, full_name, email, password, id from users')
+>         for row in cursor:
+>                 a_dict = {}
+>                 a_dict['username'] = row[0]
+>                 a_dict['name'] = row[1]
+>                 a_dict['email'] = row[2]
+>                 a_dict['password'] = row[3]
+>                 a_dict['id'] = row[4]
+>                 api_list.append(a_dict)
+>         conn.close()
+>         return jsonify({'user_list': api_list})
+> ```
+
+#### GET /api/v1/users/\[user\_id\]
+
+> 在 app.py 中增加如下代码:
+>
+> ```
+> from flask import abort
+>
+> @app.route('/api/v1/users/<int:user_id>', methods=['GET'])
+> def get_user(user_id):
+>         return list_user(user_id)
+>
+> def list_user(user_id):
+>         conn = sqlite3.connect('/home/mike/mydb.db')
+>         print('Opened database successfully')
+>         cursor = conn.execute('SELECT username, full_name, email, password, id from users where id=?', (user_id,))
+>         data = cursor.fetchall()
+>         if len(data) == 0:
+>              abort(404)
+>         else:        
+>              user = {}
+>              user['username'] = data[0][0]
+>              user['name'] = data[0][1]
+>              user['email'] = data[0][2]
+>              user['password'] = data[0][3]
+>              user['id'] = data[0][4]
+>         conn.close()
+>         return jsonify(user), 200
+> ```
+>
+> 这样，如果请求的 user\_id 不存在，Flask 应用会返回 404 错误。由于我们开发的 Web 应用，因此需要为 API 球球返回 JSON，而非 HTML。因此需要对错误处理稍加修改:
+>
+> ```
+> from flask import make_response
+>
+> @app.errorhandler(404)
+> def resource_not_found(error):
+>     return make_reponse(jsonify({'error': 'Resource not found!'}), 404)
+> ```
 
 
 
