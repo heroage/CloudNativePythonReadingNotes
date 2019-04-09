@@ -78,8 +78,10 @@
 > ```
 > $ python app.py
 > ```
->
-> 至此，在继续构建 RESTful API 之前，我们先明确待构建 RESTful API 的根 URL，并对 API 要实现的功能进行规划，定义各 URI 要实现的功能:
+
+### 开始创建 V1 版 RESTful API
+
+> 至此，我们已经完成了构建 RESTful API 的准备，在继续之前我们先明确一下 V1 版本 RESTful API 的根 URL，并对 API 要实现的功能进行规划，定义各 URI 要实现的功能:
 >
 > **根 URL: **
 >
@@ -93,12 +95,12 @@
 > | :---: | :--- | :--- |
 > | GET | [http://localhost:5000/api/v1/info](http://localhost:5000/api/v1/info) | 返回版本 |
 > | GET | [http://localhost:5000/api/v1/users](http://localhost:5000/api/v1/users) | 返回用户列表 |
-> | GET | [http://localhost:5000/api/v1/users/\\[user\_id\\]](http://localhost:5000/api/v1/users/[user_id]%28http://localhost:5000/api/v1/users/[user_id%29\) | 根据 user\_id 返回用户详细信息 |
+> | GET | http://localhost:5000/api/v1/users/\[user\_id\] | 根据 user\_id 返回用户详细信息 |
 > | POST | [http://localhost:5000/api/v1/users](http://localhost:5000/api/v1/users) | 根据传入对象值，在后台创建新用户 |
 > | DELETE | [http://localhost:5000/api/v1/users](http://localhost:5000/api/v1/users) | 根据传入的 JSON 格式文本中指定的 username 删除用户 |
-> | PUT | [http://localhost:5000/api/v1/users/\\[user\_id\\]](http://localhost:5000/api/v1/users/[user_id]%28http://localhost:5000/api/v1/users/[user_id%29\) | 基于 API 调用传入的 JSON 对象中的信息，更新指定 user\_id 的信息。 |
+> | PUT | http://localhost:5000/api/v1/users/\[user\_id\] | 基于 API 调用传入的 JSON 对象中的信息，更新指定 user\_id 的信息。 |
 
-### 创建第一个资源: /api/v1/info
+#### 创建第一个 API: /api/v1/info
 
 > 首先在 SQLite3 中创建一个 apirelease 的表结构，其中包含 API 版本和发布信息。运行下列命令:
 >
@@ -146,13 +148,13 @@
 >
 > 完成以上工作，就可以使用浏览器或 telnet 终端访问 [http://localhost:5000/api/v1/info，执行](http://localhost:5000/api/v1/info，执行) RESTful 调用了。
 
-### 构建 user 资源的方法
+#### 构建 users 表
 
 > 为 user 定义如下字段:
 >
 > * id
 > * username
-> * emailid
+> * email
 > * password
 > * full\_name
 >
@@ -228,13 +230,13 @@
 >
 > from flask import make\_response
 >
->
->
 > @app.errorhandler\(404\)
 >
 > def resource\_not\_found\(error\):
 >
->     return make\_reponse\(jsonify\({'error': 'Resource not found!'}\), 404\)
+> ```
+> return make\_reponse\(jsonify\({'error': 'Resource not found!'}\), 404\)
+> ```
 
 #### POST /api/v1/users
 
@@ -245,6 +247,7 @@
 > * **参数形式**: 将要添加的记录值作为 URL 的参数传递给 request
 >
 > 本书采用第一种方式，即 JSON 方式，在 app.py 中增加如下代码:
+>
 > ```
 > @app.route('/api/v1/users', methods=['POST'])
 > def create_user():
@@ -352,6 +355,12 @@
 >                                 conn.commit()
 >                 conn.close()
 >                 return 'Success'
+> ```
+>
+> 添加以上代码后，使用 API 调用测试:
+>
+> ```
+> curl -i -H "Content-Type: application/json" -X put -d '{"password":"mahesh@rocks" }' http://119.167.199.204:5000/api/v1/users/4
 > ```
 
 
