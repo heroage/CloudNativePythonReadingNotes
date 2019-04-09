@@ -144,7 +144,7 @@
 >         app.run(host='0.0.0.0', port=5000, debug=True)
 > ```
 >
-> 完成以上工作，就可以使用浏览器或 telnet 终端访问 http://localhost:5000/api/v1/info，执行 RESTful 调用了。
+> 完成以上工作，就可以使用浏览器或 telnet 终端访问 [http://localhost:5000/api/v1/info，执行](http://localhost:5000/api/v1/info，执行) RESTful 调用了。
 
 ### 构建 user 资源的方法
 
@@ -157,6 +157,7 @@
 > * full\_name
 >
 > 使用下列命令在 SQLite 中创建 users 表结构:
+>
 > ```
 > .open /mydir/mydb.db
 >
@@ -225,12 +226,132 @@
 >
 > 这样，如果请求的 user\_id 不存在，Flask 应用会返回 404 错误。由于我们开发的 Web 应用，因此需要为 API 球球返回 JSON，而非 HTML。因此需要对错误处理稍加修改:
 >
-> ```
-> from flask import make_response
+> from flask import make\_response
 >
-> @app.errorhandler(404)
-> def resource_not_found(error):
->     return make_reponse(jsonify({'error': 'Resource not found!'}), 404)
+>
+>
+> @app.errorhandler\(404\)
+>
+> def resource\_not\_found\(error\):
+>
+>     return make\_reponse\(jsonify\({'error': 'Resource not found!'}\), 404\)
+
+#### POST /api/v1/users
+
+> 通过 POST 方法向列表中添加新用户，有两种传递数据的方法:
+>
+> * **JSON**:  将 JSON 记录\(即将要添加的记录转换为 JSON 形式\)作为一个对象，传递给 request，作为请求的一部分。RESTful  API 调用格式大致如下:
+>   curl -i -H "Content-Type: application/json" -X POST -d {"field1":"value"} resourcce\_url
+> * **参数形式**: 将要添加的记录值作为 URL 的参数传递给 request
+>
+> 本书采用第一种方式，即 JSON 方式，在 app.py 中增加如下代码:
+> ```
+> @app.route('/api/v1/users', methods=['POST'])
+> def create_user():
+>         if not request.json or not 'username' in request.json or not 'email' in request.json or not 'password' in request.json:
+>                 abort(400)
+>         user = {
+>                 'username': request.json['username'],
+>                 'email': request.json['email'],
+>                 'name': request.json.get('name', ''),
+>                 'password': request.json['password']
+>         }
+>         return jsonify({'status': add_user(user)}), 201
+>
+> def add_user(new_user):
+>         conn = sqlite3.connect('/home/mike/mydb.db')
+>         print('Opened database successfully')
+>         api_list = []
+>         cursor = conn.cursor()
+>         cursor.execute('SELECT * from users where username=? or email=?', (new_user['username'], new_user['email']))
+>         data = cursor.fetchall()
+>         if len(data) != 0:
+>                 conn.close()
+>                 abort(409)
+>         else:
+>                 cursor.execute('insert into users (username, email, password, full_name) values(?,?,?,?)', (new_user['username'], new_user['email'],
+>                         new_user['password'], new_user['name']))
+>                 conn.commit()
+>                 conn.close()
+>                 return 'Success'
+> ```
+>
+> 添加以上代码后，使用 API 调用测试:
+>
+> ```
+> curl -i -H "Content-Type: application/json" -X POST -d '{"username":"mahesh2@rocks", "email": "mahesh99@gmail.com","password": "mahesh123", "name":"Mahesh" }' http://localhost:5000/api/v1/users
+> ```
+>
+> 第一次调用，通常会显示 Success。但第二次之后，就会提示 409 冲突错误，原因是意图增加重复记录。
+
+#### DELETE /api/v1/users
+
+> delete 方法用于删除指定 username 的用户。需要传递给 request 一个包含 username 的 JSON 对象。向 app.py 中加入以下代码:
+>
+> ```
+> @app.route('/api/v1/users', methods=['DELETE'])
+> def delete_user():
+>         if not request.json or not 'username' in request.json:
+>                 abort(400)
+>         user = request.json['username']
+>         return jsonify({'status': del_user(user)}), 200
+>
+> def del_user(del_user):
+>         conn = sqlite3.connect('/home/mike/mydb.db')
+>         print('Opened database successfully')
+>         cursor = conn.cursor()
+>         cursor.execute('SELECT * from users where username=?', (del_user,))
+>         data = cursor.fetchall()
+>         print('Data', data)
+>         if len(data) == 0:
+>                 conn.close()
+>                 abort(404)
+>         else:
+>                 cursor.execute('delete from users where username=?', (del_user,))
+>                 conn.commit()
+>                 conn.close()
+>                 return 'Success'
+> ```
+>
+> 添加以上代码后，使用 API 调用测试:
+>
+> ```
+> curl -i -H "Content-Type: application/json" -X delete -d '{"username":"manish123" }' http://localhost:5000/api/v1/users
+> ```
+
+#### PUT /api/v1/users
+
+> PUT API 用来更新指定用户的信息，向 app.py 中加入如下代码:
+>
+> ```
+> @app.route('/api/v1/users/<int:user_id>', methods=['PUT'])
+> def update_user(user_id):
+>         user = {}
+>         if not request.json:
+>                 abort(400)
+>         user['id'] = user_id
+>         key_list = request.json.keys()
+>         for i in key_list:
+>                 user[i] = request.json[i]
+>         print(user)
+>         return jsonify({'status': upd_user(user)}), 200
+>
+> def upd_user(user):
+>         conn = sqlite3.connect(/home/mike/mydb.db)
+>         print('Opened database successfully')
+>         cursor = conn.execute('SELECT * from users where id=?', (user['id'],))
+>         data = cursor.fetchall()
+>         print(data)
+>         if len(data) == 0:
+>                 abort(404)
+>         else:
+>                 key_list = user.keys()
+>                 for i in key_list:
+>                         if i != 'id':
+>                                 cursor.execute('UPDATE users SET {0}=? WHERE id=?'.format(i), (user[i], user['id']))
+>                                 conn.commit()
+>                 conn.close()
+>                 return 'Success'
 > ```
 
 
