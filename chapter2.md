@@ -95,10 +95,10 @@
 > | :---: | :--- | :--- |
 > | GET | [http://localhost:5000/api/v1/info](http://localhost:5000/api/v1/info) | 返回版本 |
 > | GET | [http://localhost:5000/api/v1/users](http://localhost:5000/api/v1/users) | 返回用户列表 |
-> | GET | [http://localhost:5000/api/v1/users/&lt;user\_id\&gt;](http://localhost:5000/api/v1/users/<user_id&gt) | 根据 user\_id 返回用户详细信息 |
+> | GET | [http://localhost:5000/api/v1/users/&lt;user\_id&gt;](http://localhost:5000/api/v1/users/<user_id&gt) | 根据 user\_id 返回用户详细信息 |
 > | POST | [http://localhost:5000/api/v1/users](http://localhost:5000/api/v1/users) | 根据传入对象值，在后台创建新用户 |
 > | DELETE | [http://localhost:5000/api/v1/users](http://localhost:5000/api/v1/users) | 根据传入的 JSON 格式文本中指定的 username 删除用户 |
-> | PUT | [http://localhost:5000/api/v1/users/&lt;user\_id\&gt;](http://localhost:5000/api/v1/users/<user_id&gt) | 基于 API 调用传入的 JSON 对象中的信息，更新指定 user\_id 的信息。 |
+> | PUT | [http://localhost:5000/api/v1/users/&lt;user\_id&gt;](http://localhost:5000/api/v1/users/<user_id&gt) | 基于 API 调用传入的 JSON 对象中的信息，更新指定 user\_id 的信息。 |
 
 #### 创建第一个 API: /api/v1/info
 
