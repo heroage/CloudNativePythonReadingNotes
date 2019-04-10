@@ -382,9 +382,9 @@
 >
 > > | **HTTP Method** | **URI** | **Actions** |
 > > | :--- | :--- | :--- |
-> > | GET | http://localhost:5000/api/v2/tweets | 获取 tweet 列表 |
-> > | GET | http://localhost:5000/api/v2/users/\[user\_id\] | 获取指定 user\_id 的 tweet 列表 |
-> > | POST | http://localhost:5000/api/v2/tweets | 通过传给 API 的 JSON 数据新建新 tweet\(一个或多个\)，并保存到数据库 |
+> > | GET | [http://localhost:5000/api/v2/tweets](http://localhost:5000/api/v2/tweets) | 获取 tweet 列表 |
+> > | GET | [http://localhost:5000/api/v2/users/\[user\_id\](http://localhost:5000/api/v2/users/[user_id\)\] | 获取指定 user\_id 的 tweet 列表 |
+> > | POST | [http://localhost:5000/api/v2/tweets](http://localhost:5000/api/v2/tweets) | 通过传给 API 的 JSON 数据新建新 tweet\(一个或多个\)，并保存到数据库 |
 >
 > tweet 包含以下字段:
 >
@@ -402,7 +402,7 @@
 >     id integer primary key autoincrement, 
 >     username varchar2(30), 
 >     body varchar2(30), 
->     tweet_time date); 
+>     tweet_time date);
 > ```
 
 #### GET /api/v2/tweets
@@ -410,7 +410,70 @@
 > 获取用户所有 tweets，在 app.py 中增加如下代码:
 >
 > ```
+> @app.route('/api/v2/tweets', methods=['GET'])
+> def get_tweets():
+>         return list_tweets()
 >
+> def list_tweets():
+>         conn = sqlite3.connect('/mydir/mydb.db')
+>         print('Opened database successfully')
+>         api_list = []
+>         cursor = conn.execute('SELECT username, body, tweet_time, id from tweets')
+>         data = cursor.fetchall()
+>         if data != 0:
+>                 for row in cursor:
+>                         tweet = {}
+>                         tweet['Tweet By'] = row[0]
+>                         tweet['Body'] = row[1]
+>                         tweet['Timestamp'] = row[2]
+>                         tweet['id'] = row[3]
+>                         api_list.append(tweet)
+>                 conn.close()
+>                 return jsonify({'tweets_list': api_list})
+>         else:
+>                 conn.close()
+>                 return api_list
+> ```
+>
+> 添加以上代码后，使用 API 调用测试，由于未添加任何 tweet，因此结果为空:
+>
+> ```
+> curl http://localhost:5000/api/v2/tweets -v
+> ```
+
+#### POST /api/v2/tweets
+
+> 使用 POST 为指定用户添加 tweet，在 app.py 中增加如下代码:
+>
+> ```
+> from time import gmtime, strftime
+>
+> @app.route('/api/v2/tweets', methods=['POST'])
+> def add_tweets():
+>         user_tweet = {}
+>         if not request.json or not 'username' in request.json or not 'body' in request.json:
+>                 abort(400)
+>         user_tweet['username'] = request.json['username']
+>         user_tweet['body'] = request.json['body']
+>         user_tweet['created_at'] = strftime('%Y-%m-%dT%H:%M:%SZ', gmtime())
+>         print(user_tweet)
+>         return jsonify({'status': add_tweet(user_tweet)}), 200
+>
+> def add_tweet(new_tweets):
+>         conn = sqlite3.connect(dbpath)
+>         echodbok()
+>         cursor = conn.execute('SELECT * from users where username=?', (new_tweets['username'],))
+>         data = cursor.fetchall()
+>
+>         if len(data) == 0:
+>                 conn.close()
+>                 abort(404)
+>         else:
+>                 cursor.execute('INSERT into tweets (username, body, tweet_time) values (?,?,?)',
+>                         (new_tweets['username'], new_tweets['body'], new_tweets['created_at']))
+>                 conn.commit()
+>                 conn.close()
+>                 return 'Success'
 > ```
 
 
