@@ -383,7 +383,7 @@
 > > | **HTTP Method** | **URI** | **Actions** |
 > > | :--- | :--- | :--- |
 > > | GET | [http://localhost:5000/api/v2/tweets](http://localhost:5000/api/v2/tweets) | 获取 tweet 列表 |
-> > | GET | http://localhost:5000/api/v2/users/&lt;user\_id\&gt; | 获取指定 user\_id 的 tweet 列表 |
+> > | GET | [http://localhost:5000/api/v2/users/&lt;user\_id&gt](http://localhost:5000/api/v2/users/<user_id\&gt); | 获取指定 user\_id 的 tweet 列表 |
 > > | POST | [http://localhost:5000/api/v2/tweets](http://localhost:5000/api/v2/tweets) | 通过传给 API 的 JSON 数据新建新 tweet\(一个或多个\)，并保存到数据库 |
 >
 > tweet 包含以下字段:
