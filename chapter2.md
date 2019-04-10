@@ -95,10 +95,10 @@
 > | :---: | :--- | :--- |
 > | GET | [http://localhost:5000/api/v1/info](http://localhost:5000/api/v1/info) | 返回版本 |
 > | GET | [http://localhost:5000/api/v1/users](http://localhost:5000/api/v1/users) | 返回用户列表 |
-> | GET | [http://localhost:5000/api/v1/users/\[user\_id\](http://localhost:5000/api/v1/users/[user_id\)\] | 根据 user\_id 返回用户详细信息 |
+> | GET | \[[http://localhost:5000/api/v1/users/\[user\_id\]\(http://localhost:5000/api/v1/users/\[user\_id\)\](http://localhost:5000/api/v1/users/[user_id]%28http://localhost:5000/api/v1/users/[user_id%29\)\] | 根据 user\_id 返回用户详细信息 |
 > | POST | [http://localhost:5000/api/v1/users](http://localhost:5000/api/v1/users) | 根据传入对象值，在后台创建新用户 |
 > | DELETE | [http://localhost:5000/api/v1/users](http://localhost:5000/api/v1/users) | 根据传入的 JSON 格式文本中指定的 username 删除用户 |
-> | PUT | [http://localhost:5000/api/v1/users/\[user\_id\](http://localhost:5000/api/v1/users/[user_id\)\] | 基于 API 调用传入的 JSON 对象中的信息，更新指定 user\_id 的信息。 |
+> | PUT | \[[http://localhost:5000/api/v1/users/\[user\_id\]\(http://localhost:5000/api/v1/users/\[user\_id\)\](http://localhost:5000/api/v1/users/[user_id]%28http://localhost:5000/api/v1/users/[user_id%29\)\] | 基于 API 调用传入的 JSON 对象中的信息，更新指定 user\_id 的信息。 |
 
 #### 创建第一个 API: /api/v1/info
 
@@ -182,7 +182,7 @@
 >         return list_users()
 >
 > def list_users():
->         conn = sqlite3.connect('/home/mike/mydb.db')
+>         conn = sqlite3.connect('/mydir/mydb.db')
 >         print('Opened database successfully')
 >         api_list = []
 >         cursor = conn.execute('SELECT username, full_name, email, password, id from users')
@@ -210,7 +210,7 @@
 >         return list_user(user_id)
 >
 > def list_user(user_id):
->         conn = sqlite3.connect('/home/mike/mydb.db')
+>         conn = sqlite3.connect('/mydir/mydb.db')
 >         print('Opened database successfully')
 >         cursor = conn.execute('SELECT username, full_name, email, password, id from users where id=?', (user_id,))
 >         data = cursor.fetchall()
@@ -261,7 +261,7 @@
 >         return jsonify({'status': add_user(user)}), 201
 >
 > def add_user(new_user):
->         conn = sqlite3.connect('/home/mike/mydb.db')
+>         conn = sqlite3.connect('/mydir/mydb.db')
 >         print('Opened database successfully')
 >         api_list = []
 >         cursor = conn.cursor()
@@ -299,7 +299,7 @@
 >         return jsonify({'status': del_user(user)}), 200
 >
 > def del_user(del_user):
->         conn = sqlite3.connect('/home/mike/mydb.db')
+>         conn = sqlite3.connect('/mydir/mydb.db')
 >         print('Opened database successfully')
 >         cursor = conn.cursor()
 >         cursor.execute('SELECT * from users where username=?', (del_user,))
@@ -339,7 +339,7 @@
 >         return jsonify({'status': upd_user(user)}), 200
 >
 > def upd_user(user):
->         conn = sqlite3.connect(/home/mike/mydb.db)
+>         conn = sqlite3.connect('/mydir/mydb.db')
 >         print('Opened database successfully')
 >         cursor = conn.execute('SELECT * from users where id=?', (user['id'],))
 >         data = cursor.fetchall()
@@ -364,7 +364,13 @@
 
 ### 构建 V2 版 RESTful API
 
-> 前面定义了 V1 版的 API，下面将定义 V2 版的 API，向微服务中添加 tweet 资源。
+> 前面定义了 V1 版的 API，下面将定义 V2 版的 API，向微服务中添加 tweet 资源。首先，向 Sqlite3 插入 V2 信息:
+>
+> ```
+> $ sqlite3
+> sqlite> .open /mydir/mydb.db
+> sqlite> Insert into apirelease values ('2017-01-11 12:20:00', "v2", "/api/v2/tweets", "get, post");
+> ```
 
 
 
