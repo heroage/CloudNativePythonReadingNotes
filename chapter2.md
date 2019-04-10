@@ -79,9 +79,9 @@
 > $ python app.py
 > ```
 
-### 开始创建 V1 版 RESTful API
+### 创建 V1 版 RESTful API
 
-> 至此，我们已经完成了构建 RESTful API 的准备，在继续之前我们先明确一下 V1 版本 RESTful API 的根 URL，并对 API 要实现的功能进行规划，定义各 URI 要实现的功能:
+> 至此，我们已经完成了构建 RESTful API 的准备，在继续之前我们先明确一下 V1 版本 RESTful API \(用户相关 API\)的根 URL，并对 API 要实现的功能进行规划，定义各 URI 要实现的功能:
 >
 > **根 URL: **
 >
@@ -95,24 +95,25 @@
 > | :---: | :--- | :--- |
 > | GET | [http://localhost:5000/api/v1/info](http://localhost:5000/api/v1/info) | 返回版本 |
 > | GET | [http://localhost:5000/api/v1/users](http://localhost:5000/api/v1/users) | 返回用户列表 |
-> | GET | http://localhost:5000/api/v1/users/\[user\_id\] | 根据 user\_id 返回用户详细信息 |
+> | GET | [http://localhost:5000/api/v1/users/\[user\_id\](http://localhost:5000/api/v1/users/[user_id\)\] | 根据 user\_id 返回用户详细信息 |
 > | POST | [http://localhost:5000/api/v1/users](http://localhost:5000/api/v1/users) | 根据传入对象值，在后台创建新用户 |
 > | DELETE | [http://localhost:5000/api/v1/users](http://localhost:5000/api/v1/users) | 根据传入的 JSON 格式文本中指定的 username 删除用户 |
-> | PUT | http://localhost:5000/api/v1/users/\[user\_id\] | 基于 API 调用传入的 JSON 对象中的信息，更新指定 user\_id 的信息。 |
+> | PUT | [http://localhost:5000/api/v1/users/\[user\_id\](http://localhost:5000/api/v1/users/[user_id\)\] | 基于 API 调用传入的 JSON 对象中的信息，更新指定 user\_id 的信息。 |
 
 #### 创建第一个 API: /api/v1/info
 
 > 首先在 SQLite3 中创建一个 apirelease 的表结构，其中包含 API 版本和发布信息。运行下列命令:
 >
 > ```
-> CREATE TABLE apirelease(
+> $ sqlite3
+> sqlite> CREATE TABLE apirelease(
 >     buildtime date,
 >     version varchar(30) primary key,
 >     links varchar2(30), methods varchar2(30));
 >
-> Insert into apirelease values ('2017-01-01 10:00:00', "v1", "/api/v1/users", "get, post, put, delete");
+> sqlite> Insert into apirelease values ('2017-01-01 10:00:00', "v1", "/api/v1/users", "get, post, put, delete");
 >
-> .save /mydir/mydb.db
+> sqlite> .save /mydir/mydb.db
 > ```
 >
 > 然后，在 app.py 中定义函数和路由 /api/vi/info，用于处理对 /api/v1/info 路径的 RESTful 调用。
@@ -161,9 +162,9 @@
 > 使用下列命令在 SQLite 中创建 users 表结构:
 >
 > ```
-> .open /mydir/mydb.db
+> sqlite> .open /mydir/mydb.db
 >
-> CREATE TABLE users(
+> sqlite> CREATE TABLE users(
 >     username varchar2(30),
 >     email varchar2(30),
 >     password varchar2(30),
@@ -228,14 +229,12 @@
 >
 > 这样，如果请求的 user\_id 不存在，Flask 应用会返回 404 错误。由于我们开发的 Web 应用，因此需要为 API 球球返回 JSON，而非 HTML。因此需要对错误处理稍加修改:
 >
-> from flask import make\_response
->
-> @app.errorhandler\(404\)
->
-> def resource\_not\_found\(error\):
->
 > ```
-> return make\_reponse\(jsonify\({'error': 'Resource not found!'}\), 404\)
+> from flask import make_response
+>
+> @app.errorhandler(404)
+> def resource_not_found(error):
+>     return make_reponse(jsonify({'error': 'Resource not found!'}), 404)
 > ```
 
 #### POST /api/v1/users
@@ -282,7 +281,7 @@
 > 添加以上代码后，使用 API 调用测试:
 >
 > ```
-> curl -i -H "Content-Type: application/json" -X POST -d '{"username":"mahesh2@rocks", "email": "mahesh99@gmail.com","password": "mahesh123", "name":"Mahesh" }' http://localhost:5000/api/v1/users
+> $ curl -i -H "Content-Type: application/json" -X POST -d '{"username":"mahesh2@rocks", "email": "mahesh99@gmail.com","password": "mahesh123", "name":"Mahesh" }' http://localhost:5000/api/v1/users
 > ```
 >
 > 第一次调用，通常会显示 Success。但第二次之后，就会提示 409 冲突错误，原因是意图增加重复记录。
@@ -319,7 +318,7 @@
 > 添加以上代码后，使用 API 调用测试:
 >
 > ```
-> curl -i -H "Content-Type: application/json" -X delete -d '{"username":"manish123" }' http://localhost:5000/api/v1/users
+> $ curl -i -H "Content-Type: application/json" -X delete -d '{"username":"manish123" }' http://localhost:5000/api/v1/users
 > ```
 
 #### PUT /api/v1/users
@@ -360,8 +359,12 @@
 > 添加以上代码后，使用 API 调用测试:
 >
 > ```
-> curl -i -H "Content-Type: application/json" -X put -d '{"password":"mahesh@rocks" }' http://119.167.199.204:5000/api/v1/users/4
+> $ curl -i -H "Content-Type: application/json" -X put -d '{"password":"mahesh@rocks" }' http://119.167.199.204:5000/api/v1/users/4
 > ```
+
+### 构建 V2 版 RESTful API
+
+> 前面定义了 V1 版的 API，下面将定义 V2 版的 API，向微服务中添加 tweet 资源。
 
 
 
