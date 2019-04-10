@@ -5,7 +5,7 @@
 > * 构建 HTML 页面和数据绑定
 > * 使用 knockout.js 的 JavaScript REST 客户端
 >
-> knockout.js 是一个基于 MVVM\(Model View View Model\)的 JavaScript 库，可以独立工作，也可以与其他 JavaScript 库\(如 jQuery 等\)一起使用。通常用于开发桌面 Web 应用程序，它提供了与数据源同步的响应机制，以及数据模型和用户界面之间的双向绑定机制。
+> knockout.js 是一个基于 MVVM\(Model View View Model\)的 JavaScript 库，可以独立工作，也可以与其他 JavaScript 库\(如 jQuery 等\)一起使用。通常用于开发桌面 Web 应用程序，它提供了与数据源同步的响应机制，以及数据模型和用户界面之间的双向绑定机制。  
 > 下面我们讨论 knockout.js 的两个重要概念: 绑定和可观察性\(Observables\)。
 
 ## 应用入门
@@ -43,7 +43,7 @@
 >   <script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-
 >     2.2.1.js"></script> 
 >   </body> 
-> </html> 
+> </html>
 > ```
 
 ## 创建应用程序用户
