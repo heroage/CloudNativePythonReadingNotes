@@ -455,11 +455,11 @@
 >         user_tweet['body'] = request.json['body']
 >         user_tweet['created_at'] = strftime('%Y-%m-%dT%H:%M:%SZ', gmtime())
 >         print(user_tweet)
->         return jsonify({'status': add_tweet(user_tweet)}), 200
+>         return jsonify({'status': add_tweet(user_tweet)}), 201
 >
 > def add_tweet(new_tweets):
->         conn = sqlite3.connect(dbpath)
->         echodbok()
+>         conn = sqlite3.connect('/mydir/mydb.db')
+>         print('Opened database successfully')
 >         cursor = conn.execute('SELECT * from users where username=?', (new_tweets['username'],))
 >         data = cursor.fetchall()
 >
@@ -479,6 +479,159 @@
 > ```
 > $ curl -i -H "Content-Type: application/json" -X POST -d '{"username":"mahesh@rocks","body": "It works" }' http://localhost:5000/api/v2/tweets
 > $ curl http://localhost:5000/api/v2/tweets -v
+> ```
+
+#### GET /api/v2/tweets/&lt;id&gt;
+
+> GET 方法获取指定 ID 的 tweet，向 app.py 中加入以下代码:
+>
+> ```
+> @app.route('/api/v2/tweets/<int:id>', methods=['GET'])
+> def get_tweet(id):
+>         return list_tweet(id)
+>
+> def list_tweet(user_id):
+>         print(user_id)
+>         conn = sqlite3.connect('/mydir/mydb.db')
+>         print('Opened database successfully')
+>         api_list = []
+>         cursor = conn.cursor()
+>         cursor.execute('SELECT * from tweets where id=?', (user_id,))
+>         data = cursor.fetchall()
+>         conn.close()
+>         print(data)
+>         if len(data) == 0:
+>                 abort(404)
+>         else:
+>                 user = {}
+>                 user['id'] = data[0][0]
+>                 user['username'] = data[0][1]
+>                 user['body'] = data[0][2]
+>                 user['tweet_time'] = data[0][3]
+>                 return jsonify(user)
+> ```
+
+### 测试 RESTful API
+
+> 本节将便携可以用做系统单独运行的测试用例，以确保 RESTful API 作为后端服务在生产环境中正常运行。测试大致可分为以下几种:
+>
+> * **功能性测试**: 主要用于测试组件或系统的功能。可以验证组件功能规范。
+> * **非功能性测试**: 针对组件质量特性的测试，包括效率测试、可靠性测试等等
+> * **结构测试**: 用于测试系统结构，测试人员必须了解代码的内部实现才能编写测试用例。
+
+#### 单元测试
+
+> 单元测试用于测试系统中的工作单元和逻辑单元代码，其特点如下:
+>
+> * **自动化**: 可以自动执行
+> * **独立**: 不应该有任何依赖
+> * **持续和可重复**: 保持幂等性\(idempotency，在编程中一个幂等操作的特点是其任意多次执行所产生的影响均与一次执行的影响相同。\)
+> * **可维护**: 容易理解和更新
+>
+> 本书使用 nose 单元测试框架，以下面的命令安装:
+> ```
+> $ pip install nose
+> ```
+>
+> 或是把 nose 写到 requirements.txt 文件中:
+>
+> ```
+> $ pip install -r requirements.txt
+> ```
+>
+> > requirements.txt 文件格式如下:
+> >
+> > ```
+> > alembic==0.8.6
+> > bleach==1.4.3
+> > click==6.6
+> > dominate==2.2.1
+> > Flask==0.11.1
+> > Flask-Bootstrap==3.3.6.0
+> > Flask-Login==0.3.2
+> > Flask-Migrate==1.8.1
+> > Flask-Moment==0.5.1
+> > Flask-PageDown==0.2.1
+> > Flask-Script==2.0.5
+> > Flask-SQLAlchemy==2.1
+> > Flask-WTF==0.12
+> > ```
+>
+> 完成 nose 的安装后，新建一个 flash\_test.py 文件，向文件中加入以下代码:
+>
+> ```
+> from app import app
+> import unittest
+>
+> class FlaskappTests(unittest.TestCase):
+>     def setUp(self):
+>         # creates a test client
+>         self.app = app.test_client()
+>         # propagate the exceptions to the test client
+>         self.app.testing = True
+>
+>     def test_users_status_code(self):
+>         # sends HTTP GET request to the application
+>         result = self.app.get('/api/v1/users')
+>         # assert the status code of the response
+>         self.assertEqual(result.status_code, 200)
+>
+>     # The GET /api/v2/tweets test case is given as follows:
+>     def test_tweets_status_code(self):
+>         # sends HTTP GET request to the application
+>         result = self.app.get('/api/v2/tweets')
+>         # assert the status code of the response
+>         self.assertEqual(result.status_code, 200)
+>
+>     # The GET /api/v1/info test case is as follows:
+>     def test_tweets_status_code(self):
+>         # sends HTTP GET request to the application
+>         result = self.app.get('/api/v1/info')
+>         # assert the status code of the response
+>         self.assertEqual(result.status_code, 200)
+>
+>     # The POST /api/v1/users test case is written like this:
+>     def test_addusers_status_code(self):
+>         # sends HTTP POST request to the application
+>         result = self.app.post('/api/v1/users', 
+>             data='{"username": "manish21", "email":"manishtest@gmail.com", "password": "test123"}',
+>             content_type='application/json')
+>         print (result)
+>         # assert the status code of the response
+>         self.assertEquals(result.status_code, 201)
+>
+>     # The PUT /api/v1/users test case is as follows:
+>     def test_updusers_status_code(self):
+>         # sends HTTP PUT request to the application
+>         # on the specified path
+>         result = self.app.put('/api/v1/users/4', 
+>             data='{"password": "testing123"}', content_type='application/json')
+>         # assert the status code of the response
+>         self.assertEquals(result.status_code, 200)
+>
+>     # The POST /api/v1/tweets test case is as follows:
+>     def test_addtweets_status_code(self):
+>         # sends HTTP GET request to the application
+>         # on the specified path
+>         result = self.app.post('/api/v2/tweets', 
+>             data='{"username": "mahesh@rocks", "body":"Wow! Is it working #testing"}',
+>             content_type='application/json')
+>         # assert the status code of the response
+>         self.assertEqual(result.status_code, 201)
+>
+>     # The DELETE /api/v1/users test case is given as follows:
+>     def test_delusers_status_code(self):
+>         # sends HTTP Delete request to the application
+>         result = self.app.delete('/api/v1/users', 
+>         data='{"username": "manish21"}', content_type='application/json')
+>         # assert the status code of the response
+>         self.assertEquals(result.status_code, 200)
+> ```
+>
+> 以上代码就是单元测试的范例，当然也可以根据需要编写更多的测试用例。完成测试用例的编写，执行下面的命令，即可执行所有的测试用例:
+>
+> ```
+> $ nosetests
 > ```
 
 
