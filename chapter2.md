@@ -95,7 +95,7 @@
 > | :---: | :--- | :--- |
 > | GET | [http://localhost:5000/api/v1/info](http://localhost:5000/api/v1/info) | 返回版本 |
 > | GET | [http://localhost:5000/api/v1/users](http://localhost:5000/api/v1/users) | 返回用户列表 |
-> | GET | [http://localhost:5000/api/v1/users/&lt;user\_id\\&gt;](http://localhost:5000/api/v1/users/<user_id&gt) | 根据 user\_id 返回用户详细信息 |
+> | GET | [http://localhost:5000/api/v1/users/&lt;user\_id\&gt;](http://localhost:5000/api/v1/users/<user_id&gt) | 根据 user\_id 返回用户详细信息 |
 > | POST | [http://localhost:5000/api/v1/users](http://localhost:5000/api/v1/users) | 根据传入对象值，在后台创建新用户 |
 > | DELETE | [http://localhost:5000/api/v1/users](http://localhost:5000/api/v1/users) | 根据传入的 JSON 格式文本中指定的 username 删除用户 |
 > | PUT | [http://localhost:5000/api/v1/users/&lt;user\_id\&gt;](http://localhost:5000/api/v1/users/<user_id&gt) | 基于 API 调用传入的 JSON 对象中的信息，更新指定 user\_id 的信息。 |
@@ -376,6 +376,41 @@
 >
 > ```
 > $ curl http://localhost:5000/api/v1/info
+> ```
+>
+> 下面对 V2 API 的 URI 进行规划:
+>
+> > | **HTTP Method** | **URI** | **Actions** |
+> > | :--- | :--- | :--- |
+> > | GET | http://localhost:5000/api/v2/tweets | 获取 tweet 列表 |
+> > | GET | http://localhost:5000/api/v2/users/\[user\_id\] | 获取指定 user\_id 的 tweet 列表 |
+> > | POST | http://localhost:5000/api/v2/tweets | 通过传给 API 的 JSON 数据新建新 tweet\(一个或多个\)，并保存到数据库 |
+>
+> tweet 包含以下字段:
+>
+> * id
+> * username
+> * body
+> * tweet\_time
+>
+> 在 Sqlite3 中定义 tweets 表:
+>
+> ```
+> $ sqlite3
+> sqlite> .open /mydir/mydb.db
+> sqlite> CREATE TABLE tweets( 
+>     id integer primary key autoincrement, 
+>     username varchar2(30), 
+>     body varchar2(30), 
+>     tweet_time date); 
+> ```
+
+#### GET /api/v2/tweets
+
+> 获取用户所有 tweets，在 app.py 中增加如下代码:
+>
+> ```
+>
 > ```
 
 
