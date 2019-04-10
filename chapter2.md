@@ -95,10 +95,10 @@
 > | :---: | :--- | :--- |
 > | GET | [http://localhost:5000/api/v1/info](http://localhost:5000/api/v1/info) | 返回版本 |
 > | GET | [http://localhost:5000/api/v1/users](http://localhost:5000/api/v1/users) | 返回用户列表 |
-> | GET | \[[http://localhost:5000/api/v1/users/\[user\_id\]\(http://localhost:5000/api/v1/users/\[user\_id\)\](http://localhost:5000/api/v1/users/[user_id]%28http://localhost:5000/api/v1/users/[user_id%29\)\] | 根据 user\_id 返回用户详细信息 |
+> | GET | http://localhost:5000/api/v1/users/&lt;user\_id&gt; | 根据 user\_id 返回用户详细信息 |
 > | POST | [http://localhost:5000/api/v1/users](http://localhost:5000/api/v1/users) | 根据传入对象值，在后台创建新用户 |
 > | DELETE | [http://localhost:5000/api/v1/users](http://localhost:5000/api/v1/users) | 根据传入的 JSON 格式文本中指定的 username 删除用户 |
-> | PUT | \[[http://localhost:5000/api/v1/users/\[user\_id\]\(http://localhost:5000/api/v1/users/\[user\_id\)\](http://localhost:5000/api/v1/users/[user_id]%28http://localhost:5000/api/v1/users/[user_id%29\)\] | 基于 API 调用传入的 JSON 对象中的信息，更新指定 user\_id 的信息。 |
+> | PUT | http://localhost:5000/api/v1/users/&lt;user\_id&gt; | 基于 API 调用传入的 JSON 对象中的信息，更新指定 user\_id 的信息。 |
 
 #### 创建第一个 API: /api/v1/info
 
@@ -359,7 +359,7 @@
 > 添加以上代码后，使用 API 调用测试:
 >
 > ```
-> $ curl -i -H "Content-Type: application/json" -X put -d '{"password":"mahesh@rocks" }' http://119.167.199.204:5000/api/v1/users/4
+> $ curl -i -H "Content-Type: application/json" -X put -d '{"password":"mahesh@rocks" }' http://localhost:5000/api/v1/users/4
 > ```
 
 ### 构建 V2 版 RESTful API
@@ -370,6 +370,12 @@
 > $ sqlite3
 > sqlite> .open /mydir/mydb.db
 > sqlite> Insert into apirelease values ('2017-01-11 12:20:00', "v2", "/api/v2/tweets", "get, post");
+> ```
+>
+> 添加数据库信息后，使用 API 调用测试:
+>
+> ```
+> $ curl http://localhost:5000/api/v1/info
 > ```
 
 
