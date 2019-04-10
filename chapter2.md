@@ -1,4 +1,4 @@
-# 第2章 使用 Python 构建微服务
+# 第二章 使用 Python 构建微服务
 
 > 本章主要内容包括:
 >
@@ -529,6 +529,7 @@
 > * **可维护**: 容易理解和更新
 >
 > 本书使用 nose 单元测试框架，以下面的命令安装:
+>
 > ```
 > $ pip install nose
 > ```
@@ -542,19 +543,8 @@
 > > requirements.txt 文件格式如下:
 > >
 > > ```
-> > alembic==0.8.6
-> > bleach==1.4.3
-> > click==6.6
-> > dominate==2.2.1
-> > Flask==0.11.1
-> > Flask-Bootstrap==3.3.6.0
-> > Flask-Login==0.3.2
-> > Flask-Migrate==1.8.1
-> > Flask-Moment==0.5.1
-> > Flask-PageDown==0.2.1
-> > Flask-Script==2.0.5
-> > Flask-SQLAlchemy==2.1
-> > Flask-WTF==0.12
+> > flask==0.10.1
+> > nose
 > > ```
 >
 > 完成 nose 的安装后，新建一个 flash\_test.py 文件，向文件中加入以下代码:
