@@ -383,7 +383,7 @@
 > > | **HTTP Method** | **URI** | **Actions** |
 > > | :--- | :--- | :--- |
 > > | GET | [http://localhost:5000/api/v2/tweets](http://localhost:5000/api/v2/tweets) | 获取 tweet 列表 |
-> > | GET | [http://localhost:5000/api/v2/users/\[user\_id\](http://localhost:5000/api/v2/users/[user_id\)\] | 获取指定 user\_id 的 tweet 列表 |
+> > | GET | \[[http://localhost:5000/api/v2/users/\[user\_id\]\(http://localhost:5000/api/v2/users/\[user\_id\)\](http://localhost:5000/api/v2/users/[user_id]%28http://localhost:5000/api/v2/users/[user_id%29\)\] | 获取指定 user\_id 的 tweet 列表 |
 > > | POST | [http://localhost:5000/api/v2/tweets](http://localhost:5000/api/v2/tweets) | 通过传给 API 的 JSON 数据新建新 tweet\(一个或多个\)，并保存到数据库 |
 >
 > tweet 包含以下字段:
@@ -420,18 +420,16 @@
 >         api_list = []
 >         cursor = conn.execute('SELECT username, body, tweet_time, id from tweets')
 >         data = cursor.fetchall()
+>         conn.close()
 >         if data != 0:
->                 for row in cursor:
->                         tweet = {}
->                         tweet['Tweet By'] = row[0]
->                         tweet['Body'] = row[1]
->                         tweet['Timestamp'] = row[2]
->                         tweet['id'] = row[3]
->                         api_list.append(tweet)
->                 conn.close()
+>                 tweet = {}
+>                 tweet['Tweet By'] = data[0][0]
+>                 tweet['Body'] = data[0][1]
+>                 tweet['Timestamp'] = data[0][2]
+>                 tweet['id'] = data[0][3]
+>                 api_list.append(tweet)
 >                 return jsonify({'tweets_list': api_list})
 >         else:
->                 conn.close()
 >                 return api_list
 > ```
 >
