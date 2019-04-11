@@ -422,12 +422,13 @@
 >         data = cursor.fetchall()
 >         conn.close()
 >         if data != 0:
->                 tweet = {}
->                 tweet['Tweet By'] = data[0][0]
->                 tweet['Body'] = data[0][1]
->                 tweet['Timestamp'] = data[0][2]
->                 tweet['id'] = data[0][3]
->                 api_list.append(tweet)
+>                 for i in range(len(data)):
+>                         tweet = {}
+>                         tweet['Tweet By'] = data[i][0]
+>                         tweet['Body'] = data[i][1]
+>                         tweet['Timestamp'] = data[i][2]
+>                         tweet['id'] = data[i][3]
+>                         api_list.append(tweet)
 >                 return jsonify({'tweets_list': api_list})
 >         else:
 >                 return api_list
