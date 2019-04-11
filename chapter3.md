@@ -102,7 +102,7 @@
 >  <script src="http://netdna.bootstrapcdn.com/twitter- 
 >    bootstrap/2.3.2/js/bootstrap.min.js"></script> 
 >  </body> 
-> </html> 
+> </html>
 > ```
 >
 > #### 使用 Observable 和 AJAX
@@ -129,34 +129,34 @@
 >     self.password= ko.observable();
 >
 >     self.addUser = function() {
-> 	self.save();
+>     self.save();
 >         self.name("");
-> 	self.username("");
-> 	self.email("");
+>     self.username("");
+>     self.email("");
 >         self.password("");
 >     };
 >
 >     self.save = function() {
-> 	return $.ajax({
-> 	    url: '/api/v1/users',
-> 	    contentType: 'application/json',
-> 	    type: 'POST',
-> 	    data: JSON.stringify({
-> 		'name': self.name(),
-> 		'username': self.username(),
+>     return $.ajax({
+>         url: '/api/v1/users',
+>         contentType: 'application/json',
+>         type: 'POST',
+>         data: JSON.stringify({
+>                 'name': self.name(),
+>                 'username': self.username(),
 >                 'email': self.email(),
 >                 'password': self.password()
-> 	    }),
-> 	    success: function(data) {
->                  alert("success")
-> 		      console.log("Pushing to users array");
-> 		      self.push(new User({ name: data.name, username: data.username,email: data.email ,password: data.password}));
-> 		      return;
-> 	    },
-> 	    error: function() {
-> 		return console.log("Failed");
-> 	    }
-> 	});
+>         }),
+>         success: function(data) {
+>              alert("success")
+>                   console.log("Pushing to users array");
+>                   self.push(new User({ name: data.name, username: data.username,email: data.email ,password: data.password}));
+>                   return;
+>         },
+>         error: function() {
+>             return console.log("Failed");
+>         }
+>     });
 >     };
 > }
 >
@@ -181,7 +181,7 @@
 > }
 > ```
 >
-> 上面的 addUser 函数调用 self.save 方法传递数据对象，save 函数使用 ajax 对 RESTful API 进行调用，
+> 上面的 addUser 函数调用 self.save 方法传递数据对象，save 函数 进行 AJAX RESTful API 调用，并从页面中收集数据执行 POST。
 
 
 
