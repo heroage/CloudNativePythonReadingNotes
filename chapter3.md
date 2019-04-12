@@ -544,7 +544,23 @@
 
 ### Cookies
 
-> Cookies 跟会话很像，不同之处在于
+> Cookie 跟 Session 很像，不同之处在于 Cookies 是以文本文件的形式储存在客户端本地，而不是由服务器维护。
+>
+> Cookie 的主要目的是跟踪客户使用情况，其属性存储在 request 对象中。request 对象是一个键值对的集合，包括 cookie、变量及相关值。
+>
+> 可以使用 request.set\_cookie 来设置 cookie，使用 request.cookies.get 来读取 cookie:
+>
+> ```
+> @app.route('/set_cookie') 
+> def cookie_insertion(): 
+>   redirect_to_main = redirect('/') 
+>   response = make_response(redirect_to_main )   
+>   response.set_cookie('cookie_name',value='values') 
+>   cookie = request.cookies.get('my_cookie')
+>   return response
+>
+>
+> ```
 
 
 
