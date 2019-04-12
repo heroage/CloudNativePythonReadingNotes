@@ -424,9 +424,9 @@
 >         if data != 0:
 >                 for i in range(len(data)):
 >                         tweet = {}
->                         tweet['Tweet By'] = data[i][0]
->                         tweet['Body'] = data[i][1]
->                         tweet['Timestamp'] = data[i][2]
+>                         tweet['username'] = data[i][0]
+>                         tweet['body'] = data[i][1]
+>                         tweet['timestamp'] = data[i][2]
 >                         tweet['id'] = data[i][3]
 >                         api_list.append(tweet)
 >                 return jsonify({'tweets_list': api_list})
