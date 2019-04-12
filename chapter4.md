@@ -53,5 +53,19 @@
 
 ## 安装 MongoDB
 
+> 在 Ubuntu 下安装 MongoDB 的步骤\(原书中的步骤比较复杂，经测试，在 Ubuntu18.04 下只用一行命令即可搞定\):
+>
+> ```
+> $ sudo apt install -y mongodb
+> ```
+>
+> 安装完成后，MongoDB 会使用 27017 端口。通过上面的命令，仅仅是安装了一个 MongoDB 的实例而已，如果要创建 MongoDB 群集，则可参考下面的链接:
+>
+> [ttps://docs.mongodb.com/manual/tutorial/deploy-shard-cluster/](ttps://docs.mongodb.com/manual/tutorial/deploy-shard-cluster/)
+
+## 初始化 MongoDB 数据库
+
+>
+
 
 
