@@ -301,7 +301,7 @@
 >   <script src="http://netdna.bootstrapcdn.com/twitter-
 >     bootstrap/2.3.2/js/bootstrap.min.js"></script> 
 >  </body> 
-> </html> 
+> </html>
 > ```
 
 #### 在 templates/addtweets.html 中使用 observable 和 AJAX
@@ -353,7 +353,7 @@
 >  }); 
 >   }; 
 > } 
-> ko.applyBindings(new TweetListViewModel()); 
+> ko.applyBindings(new TweetListViewModel());
 > ```
 
 #### 绑定数据到 templates/addtweets.html
@@ -400,6 +400,139 @@
 >     <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/js/bootstrap.min.js"></script>
 >     <script src="{{ url_for('static', filename='tweet.js') }}"></script>
 >   </body>
+> </html>
+> ```
+
+### CORS -- 跨源资源共享
+
+> CORS\(Cross-Origin Resource Sharing\)有助于在 API 服务器和客户端之间保持 API 请求的数据完整性。其理念是，服务器和客户端之间应当有足够的信息进行相互认证，并使用 HTTP header 通过安全通道传输数据。
+>
+> 当客户端进行 API 调用时，通常是发送 GET 或 POST 请求，其中 body 通常是 text/plain，而其 header 称为 Origin\(其中包括请求页面的协议、域名和端口\)。当服务器确认请求时，向同一 Origin 发送响应，响应中会附带 Access-Control-Allow-Origin 头，这样就确保了响应会被正确的 Origin 收到。
+>
+> 如此这般，Origin 之间就产生了资源分享。
+>
+> 几乎所有的浏览器都支持 Origin，如 IE 8+、Firefox 3.5+ 和 Chrome 之类。
+>
+> 首先，我们用下面的命令在 Flashk 中安装 CORS 模块:
+>
+> ```
+> $ pip install flask-cors
+> ```
+>
+> 这个包中包含了个 Flask 扩展，它默认启用了所有 Origin 和方法的 CORS 支持。完成安装后，可以使用以下代码在 app.py 中引入这个包，并启用 app 及相关资源的 CORS 支持:
+>
+> ```
+> from flask_cors import CORS, cross_origin
+>
+> CORS(app)
+> cors = CORS(app, resources={r"/api/*": "origins": “*”}})
+> ```
+>
+> 本书这里讲的太概念化，我是一头雾水，实在应该补全一点何谓 CORS 的资料，看看这段可以有些概念上的了解:
+>
+> HTTP访问控制\(CORS\): 
+>
+> [https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access\_control\_CORS](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS)
+
+### Session 管理
+
+> 会话是与用户相关的一系列请求和响应。会话工作在服务器端，用于主要用户认证，以及记录、跟踪用户在网页间的各种活动。每个客户端会话都被赋予一个会话 ID。会话通常存放在客户端 Cookies 的顶层，并由服务器公钥加密。在服务器端则由 Flask 应用程序快速地使用私钥解密。
+>
+> 下面新建 templates/main.html，并在代码中演示会话的设置及使用:
+>
+> ```
+> <html> 
+>   <head> 
+>     <title>Twitter App Demo</title> 
+>     <link rel=stylesheet type=text/css href="{{ url_for('static', 
+>     filename='style.css') }}"> 
+> </head> 
+> <body> 
+>     <div id="container"> 
+>       <div class="title"> 
+>         <h1></h1> 
+>       </div> 
+>       <div id="content"> 
+>         {% if session['name'] %} 
+>         Your name seems to be <strong>{{session['name']}}</strong>.
+>        <br/> 
+>         {% else %} 
+>         Please set username by clicking it <a href="{{ 
+>         url_for('addname') }}">here</a>.<br/> 
+>         {% endif %} 
+>        Visit <a href="{{ url_for('adduser') }}">this for adding new 
+>        application user </a> or <a href="{{ url_for('addtweets') 
+>        }}">this to add new tweets</a> page to interact with RESTFUL
+>        API. 
+>
+>        <br /><br /> 
+>        <strong><a href="{{ url_for('clearsession') }}">Clear 
+>        session</a></strong> 
+>         </div> 
+>         </div> 
+>     </div> 
+>    </body> 
+> </html> 
+> ```
+>
+> 下面修改 app.py，新增 /、/addname 、/clear路由，为应用增加入口:
+>
+> ```
+> from flask import session
+> from flask import redirect, url_for
+>
+> app.config['SECRET_KEY'] = '123456'
+>
+> @app.route('/')
+> def main():
+>         return render_template('main.html')
+>
+> @app.route('/addname')
+> def addname():
+>         if request.args.get('yourname'):
+>                 session['name'] = request.args.get('yourname')
+>                 # And ten redirect the user to the main page
+>                 return redirect(url_for('main'))
+>         else:
+>                 return render_template('addname.html', session=session)
+>
+> @app.route('/clearsession')
+> def clearsession():
+>         # Clear the session
+>         session.clear()
+>         # Redirect the user to the main page
+>         return redirct(url_for('main'))
+> ```
+>
+> 新建 templates/addname.html，并加入如下代码:
+>
+> ```
+> <html>
+>   <head>
+>     <title>Twitter App Demo</title>
+>     <link rel=stylesheet type=text/css href="{{ url_for('static',
+>      filename='style.css') }}">
+>   </head>
+>  <body>
+>     <div id="container">
+>         <div class="title">
+>             <h1>Enter your name</h1>
+>         </div>
+>      <div id="content">
+>        <form method="get" action="{{ url_for('addname') }}">
+>          <label for="yourname">Please enter your name:</label>
+>          <input type="text" name="yourname" /><br />
+>          <input type="submit" />
+>        </form>
+>      </div>
+>      <div class="title">
+>             <h1></h1>
+>      </div>
+>      <code><pre>
+>      </pre></code>
+>      </div>
+>     </div>
+>    </body>
 > </html>
 > ```
 
