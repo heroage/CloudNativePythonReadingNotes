@@ -430,13 +430,19 @@
 >
 > 本书这里讲的太概念化，我是一头雾水，实在应该补全一点何谓 CORS 的资料，看看这段可以有些概念上的了解:
 >
-> HTTP访问控制\(CORS\): 
+> HTTP访问控制\(CORS\):
 >
 > [https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access\_control\_CORS](https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS)
 
 ### Session 管理
 
-> 会话是与用户相关的一系列请求和响应。会话工作在服务器端，用于主要用户认证，以及记录、跟踪用户在网页间的各种活动。每个客户端会话都被赋予一个会话 ID。会话通常存放在客户端 Cookies 的顶层，并由服务器公钥加密。在服务器端则由 Flask 应用程序快速地使用私钥解密。
+> 会话\(Session\)是与用户相关的一系列请求和响应。会话工作在服务器端，用于主要用户认证，以及记录、跟踪用户在网页间的各种活动。每个客户端会话都被赋予一个会话 ID。会话通常存放在客户端 Cookies 的顶层，并由服务器用密钥加密。在服务器端则由 Flask 应用程序快速地使用密钥解密。
+>
+> > **题外:**
+> >
+> > 关于 Session 的话题，还需要进一步深入看看，下面是一段简单的说明。
+> >
+> > session 是基于 cookie 的一种会话技术。session 数据存放存放在服务器端，客户端通过 cookie 中携带的 SESSIONID 来访问服务端，以获取 SESSIONID 对应的 session 数据。
 >
 > 下面新建 templates/main.html，并在代码中演示会话的设置及使用:
 >
@@ -472,7 +478,7 @@
 >         </div> 
 >     </div> 
 >    </body> 
-> </html> 
+> </html>
 > ```
 >
 > 下面修改 app.py，新增 /、/addname 、/clear路由，为应用增加入口:
@@ -535,6 +541,10 @@
 >    </body>
 > </html>
 > ```
+
+### Cookies
+
+> Cookies 跟会话很像，不同之处在于
 
 
 
