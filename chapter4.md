@@ -23,18 +23,34 @@
 > * 在集群模式下，可以实现副本控制和高可用
 >
 > **MongoDB 的用途**:
+>
 > * 大数据
 > * 用户数据管理
 > * 内容交付和管理
 >
-> **MongoDB与Web应用程序集成框架图**
+> **MongoDB与Web应用程序集成框架图**  
 > ![](/img/04.MongoDB与Web应用程序集成框架图.png)
 
 ## MongoDB 术语
 
 > * **数据库**: 集合\(Collection\)的物理容器，而不是基于表。MongoDB 可以有多个数据库。
 > * **集合**: 各种模式文档的组合。集合对文档的存储结构\(schema\)没有影响，基本等价于 RDBMS 中的表。
-> * **文档**: 与 RDBMS 中的元组/行类似，是一组键值对。
+> * **文档**: 与 RDBMS 中的元组/行类似，是一组键值对。文档结构\(schema\)是动态的，在单个集合中的文档的结构可能不同，就是说同一集合中的文档字段可以不一致。
+>
+> 以下代码可以加深概念理解:
+> ```
+> {
+>    _id : ObjectId(58ccdd1a19b08311417b14ee),  
+>    body : 'New blog post,Launch your app with the AWS Startup Kit! #AWS', 
+>    timestamp : "2017-03-11T06:39:40Z", 
+>    id : 18, 
+>    tweetedby : "eric.strom"
+> }
+> ```
+>
+> MongoDB 以二进制编码格式存储 JSON 文档，称为 BSON。
+
+## 安装 MongoDB
 
 
 
