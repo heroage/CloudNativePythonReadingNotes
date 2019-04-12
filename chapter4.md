@@ -205,7 +205,6 @@
 >
 > # List tweets
 > def list_tweets():
->
 >     api_list=[]
 >     db = connection.cloud_native.tweets
 >     for row in db.find():
@@ -329,7 +328,6 @@
 >
 > @app.route('/api/v2/tweets', methods=['POST'])
 > def add_tweets():
->
 >     user_tweet = {}
 >     if not request.json or not 'username' in request.json or not 'body' in request.json:
 >         abort(400)
@@ -362,6 +360,8 @@
 >     create_mongodatabase()
 >     app.run(host='0.0.0.0', port=5000, debug=True)
 > ```
+>
+> 到这里，微服务的构建基本完毕，但在代码执行过程中发现，/addtweets、/adduser 返回的浏览器页面中，列表为空。这一问题，不知为何，即使全部使用了 https://github.com/PacktPublishing/Cloud-Native-Python 的源代码，仍不能解决。现在就不在此处纠结了，回头再说吧。
 
 
 
