@@ -119,7 +119,7 @@
 >      react/0.13.3/JSXTransformer.js"></script> 
 >
 >   </body> 
-> </html> 
+> </html>
 > ```
 >
 > 在上面的页面中，我们定义了一个 id 为 react 的 div，下面将基于此来调用 React 主函数执行相关操作。
@@ -146,12 +146,14 @@
 >   ); 
 > }; 
 >
-> $(documentReady); 
+> $(documentReady);
 > ```
 >
-> 这样我们就定义了 React response 的基本结构。由于我们构建的是一个多视图的应用，因此需要使用一个工具来帮我们把所有资源文件\(包括 JavaScript、图片、字体和 CSS 等等\)放到一个独立的包文件中。
+> 这样我们就定义了 React response 的基本结构。由于我们构建的是一个多视图的应用，因此需要使用一个工具来帮我们把所有资源文件\(包括 JavaScript、图片、字体和 CSS 等等\)打包放到一个独立的包文件中。
 >
-> 下面我们就用 Webpack 来完成这一工作。
+> 下面我们就用 Webpack 来完成这一工作，需要先安装这个工具。
+>
+> Webpack 会读入一个独立的 .js 入口文件\(webpack.config.js\)，读取其中的子组件，然后将这些子组件转换成独立的 .js 文件。
 
 
 
