@@ -39,7 +39,7 @@
 > {
 >   "name": "my-twitter-package",
 >   "version": "1.0.0"
-> } 
+> }
 > ```
 >
 > 使用下面的命令构建 packag.json 模板:
@@ -81,6 +81,77 @@
 >   "license": "ISC" 
 > }
 > ```
+>
+> 生成 package.json 文件后，使用下面的命令安装所有依赖:
+>
+> ```
+> $ npm install
+> ```
+
+## 使用 React 构建 Web 视图
+
+> 首先我们需要创建 React 需要调用的 home 视图。在模板目录下创建 templates/index.html 文件，键入如下内容:
+>
+> ```
+> <!DOCTYPE html> 
+> <html> 
+>    <head lang="en"> 
+>     <meta charset="UTF-8"> 
+>     <title>Flask react</title> 
+>   </head> 
+>   <body> 
+>   <div class="container"> 
+>     <h1></h1> 
+>     <br> 
+>     <div id="react"></div> 
+>
+>   </div> 
+>
+>    <!-- scripts --> 
+>    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script> 
+>    <script src="https://cdnjs.cloudflare.com/ajax/libs/
+>      react/15.1.0/react.min.js"></script> 
+>    <script src="https://npmcdn.com/react-
+>      router@2.8.1/umd/ReactRouter.min.js"></script> 
+>    <script src="https://cdnjs.cloudflare.com/ajax/
+>      libs/react/15.1.0/react-dom.min.js"></script> 
+>    <script src="http://cdnjs.cloudflare.com/ajax/libs/
+>      react/0.13.3/JSXTransformer.js"></script> 
+>
+>   </body> 
+> </html> 
+> ```
+>
+> 在上面的页面中，我们定义了一个 id 为 react 的 div，下面将基于此来调用 React 主函数执行相关操作。
+>
+> 创建 static/main.js，加入代码:
+>
+> ```
+> import Tweet from "./components/Tweet"; 
+> class Main extends React.Component{ 
+>   render(){ 
+>     return ( 
+>     <div> 
+>       <h1>Welcome to cloud-native-app!</h1> 
+>     </div> 
+>     ); 
+>   } 
+>  } 
+>
+>
+>  let documentReady =() =>{ 
+>   ReactDOM.render( 
+>   <Main />, 
+>    document.getElementById('react') 
+>   ); 
+> }; 
+>
+> $(documentReady); 
+> ```
+>
+> 这样我们就定义了 React response 的基本结构。由于我们构建的是一个多视图的应用，因此需要使用一个工具来帮我们把所有资源文件\(包括 JavaScript、图片、字体和 CSS 等等\)放到一个独立的包文件中。
+>
+> 下面我们就用 Webpack 来完成这一工作。
 
 
 
