@@ -27,10 +27,59 @@
 
 ### 安装 node
 
-> 首先安装 node.js
+> 略……
+
+### 创建 package.json
+
+> package.json 是应用程序的元数据配置，其中包含需要为应用程序安装的完整的库/依赖关系。其最大优点是，可以方便地重新构建，这样就简化了与其他开发者的分享。创建自定义的 package.json 的方法有很多种。
+>
+> 下面是 package.json 文件所需的最简信息:
 >
 > ```
+> {
+>   "name": "my-twitter-package",
+>   "version": "1.0.0"
+> } 
+> ```
 >
+> 使用下面的命令构建 packag.json 模板:
+>
+> ```
+> $ npm init
+> ```
+>
+> 该命令会询问一些信息，包括包名称、版本、描述等等，并根据这些信息生成 package.json 文件。可以加上参数 -y 或 --yes，让 npm 使用缺省值。
+>
+> npm init 生成的 package.json 结构大致如下:
+>
+> ```
+> { 
+>   "name": "twitter", 
+>   "version": "1.0.0", 
+>   "description": "Twitter App", 
+>   "main": "index.js", 
+>   "dependencies": { 
+>     "babel-loader": "^6.4.1", 
+>     "fbjs": "^0.8.11", 
+>     "object-assign": "^4.1.1", 
+>     "react": "^15.4.2", 
+>     "react-dev": "0.0.1", 
+>     "react-dom": "^0.14.7", 
+>     "requirejs": "^2.3.3" 
+>   }, 
+>   "devDependencies": { 
+>    "babel-core": "^6.4.5", 
+>    "babel-loader": "^6.2.1", 
+>    "babel-preset-es2015": "^6.3.13", 
+>    "babel-preset-react": "^6.3.13", 
+>    "webpack": "^1.12.12"
+>   }, 
+>   "scripts": { 
+>     "test": "echo \"Error: no test specified\" && exit 1" 
+>   }, 
+>   "author": "Manish Sethi", 
+>   "license": "ISC" 
+> }
 > ```
 
 
