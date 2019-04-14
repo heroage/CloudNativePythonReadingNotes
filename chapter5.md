@@ -50,7 +50,7 @@
 >
 > 该命令会询问一些信息，包括包名称、版本、描述等等，并根据这些信息生成 package.json 文件。可以加上参数 -y 或 --yes，让 npm 使用缺省值。
 >
-> npm init 生成的 package.json 结构大致如下:
+> 本章的项目需生成的 package.json 内容如下:
 >
 > ```
 > { 
@@ -82,7 +82,7 @@
 > }
 > ```
 >
-> 生成 package.json 文件后，使用下面的命令安装所有依赖:
+> 生成 package.json 文件后，使用下面的命令安装所有依赖项:
 >
 > ```
 > $ npm install
@@ -151,9 +151,44 @@
 >
 > 这样我们就定义了 React response 的基本结构。由于我们构建的是一个多视图的应用，因此需要使用一个工具来帮我们把所有资源文件\(包括 JavaScript、图片、字体和 CSS 等等\)打包放到一个独立的包文件中。
 >
-> 下面我们就用 Webpack 来完成这一工作，需要先安装这个工具。
+> 下面我们就用 Webpack 来完成这一工作，继续之前得需要先安装这个工具。
 >
-> Webpack 会读入一个独立的 .js 入口文件\(webpack.config.js\)，读取其中的子组件，然后将这些子组件转换成独立的 .js 文件。
+> ```
+> $ sudo apt install webpack
+> ```
+>
+> Webpack 会读入一个独立的 .js 入口文件\(文件名即为 webpack.config.js 文件中定义的 entry 值\)，并从入口文件中读取要选取或排除哪些子组件的设置，然后将这些子组件转换成独立的 .js 文件\(在 webpack.config.js 文件 output 中设置\)。\(这段的译文实在是弄得我晕头转向，但本尊也好不到哪去: Webpack, basically, reads a single entry file, which could be the .js file, reads its child components, and then converts them into a single .js file.\)
+>
+> 以下为 webpack.config.js 的配置:
+>
+> ```
+> module.exports = {
+>     entry: "./static/main.js",
+>     output: {
+>         path: __dirname + "/static/build/",
+>         filename: "bundle.js"
+>     },
+>     resolve: {
+>       extensions: ['.js', '.jsx']
+>     },
+>     module: {
+>         rules: [
+>             { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader", query:{presets:['react','es2015']} }
+>         ]
+>     }
+> };
+> ```
+>
+> 两处修正修正:
+>
+> ```
+> 本尊中可能因版本原因有两处报错，修改后正常:
+> resolve: {
+>     extensions: ['', '.js', '.jsx']
+>     
+> module: {
+>     loaders: [
+> ```
 
 
 
