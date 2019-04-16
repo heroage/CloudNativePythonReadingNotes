@@ -157,6 +157,15 @@
 > $ sudo apt install webpack
 > ```
 >
+> 或使用 npm 安装
+>
+> ```
+> # 全局安装
+> $ npm install -g webpack
+> # 安装到你的项目目录
+> $ npm install --save-dev webpack
+> ```
+>
 > **Webpack 作用图解**![](/img/05.webpack作用图解.png)
 >
 > Webpack 会读入一个独立的 .js 入口文件\(本书中入口文件名为 webpack.config.js 文件中定义的 entry 值，即 ./static/main.js\)，并从入口文件中按相关配置读取子组件，然后将这些子组件转换成独立的 .js 文件\(在 webpack.config.js 文件 output 中设置\)。
