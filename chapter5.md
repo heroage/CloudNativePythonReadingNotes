@@ -159,7 +159,7 @@
 >
 > **Webpack 作用图解**![](/img/05.webpack作用图解.png)
 >
-> Webpack 会读入一个独立的 .js 入口文件\(本书中入口文件名为 webpack.config.js 文件中定义的 entry 值\)，并从入口文件中读取要选取或排除哪些子组件的设置，然后将这些子组件转换成独立的 .js 文件\(在 webpack.config.js 文件 output 中设置\)。\(这段的译文实在是弄得我晕头转向，但本尊也好不到哪去: Webpack, basically, reads a single entry file, which could be the .js file, reads its child components, and then converts them into a single .js file.\)
+> Webpack 会读入一个独立的 .js 入口文件\(本书中入口文件名为 webpack.config.js 文件中定义的 entry 值，即 ./static/main.js\)，并从入口文件中读取要选取或排除哪些子组件的设置，然后将这些子组件转换成独立的 .js 文件\(在 webpack.config.js 文件 output 中设置\)。\(这段的译文实在是弄得我晕头转向，但本尊也好不到哪去: Webpack, basically, reads a single entry file, which could be the .js file, reads its child components, and then converts them into a single .js file.\)
 >
 > > 书中对 Webpack 的说明实在是云遮雾罩，所以还是从别处摘抄一段\([https://segmentfault.com/a/1190000006178770](https://segmentfault.com/a/1190000006178770)\)，结合上面的图示就很好理解了:
 > >
