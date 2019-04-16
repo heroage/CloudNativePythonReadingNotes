@@ -149,6 +149,28 @@
 > $(documentReady);
 > ```
 >
+> 创建 static/Tweet.js 文件，内容如下:
+>
+> ```
+> export default class Tweet extends React.Component {
+>   render() {
+>     return (
+>       <div className="row">
+>         <nav>
+>           <form>
+>             <div>
+>               <textarea ref="tweetTextArea" />
+>               <label>How you doing?</label>
+>               <button>Tweet now</button>
+>             </div>
+>           </form>
+>         </nav>
+>       </div>
+>     );
+>   }
+> }
+> ```
+
 > 这样我们就定义了 React response 的基本结构。由于我们构建的是一个多视图的应用，因此需要使用一个工具来帮我们把所有资源文件\(包括 JavaScript、图片、字体和 CSS 等等\)打包放到一个独立的包文件中。
 >
 > 下面我们就用 Webpack 来完成这一工作，继续之前得需要先安装这个工具。
@@ -201,11 +223,57 @@
 >
 > ```
 > 本尊中可能因版本原因有两处报错，修改后正常:
+> 原文件为:
 > resolve: {
 >     extensions: ['', '.js', '.jsx']
 >     
 > module: {
 >     loaders: [
+>     
+> 修改后:
+> resolve: {
+>     extensions: ['.js', '.jsx']
+>     
+> module: {
+>     rules: [
+> ```
+>
+> 完成上面的配置使用下面的命令构建第一个 Web 视图:
+>
+> ```
+> $ webpack -d
+> ```
+>
+> 使用 -d 参数开启了调试模式，这将生成一个名为 bundle.js.map 的日文件，其中记录了 webpack 的所有活动信息。由于我们后面可能会多次修改入口文件\(./static/main.js\)，每次都需要重新构建应用，因此可以使用 --watch\(-w\) 参数，以持续监听 main.js 的变更
+>
+> ```
+> $ webpack -d -w
+> ```
+>
+> > 此处由于我的 babel 版本与本尊不同，所以在执行该命令时报错:
+> >
+> > ```
+> > ERROR in ./static/main.js
+> > Module build failed (from ./node_modules/babel-loader/lib/index.js):
+> > TypeError: Cannot read property 'babel' of undefined
+> >     at Object.module.exports (~/桌面/CloudNativePython/node_modules/babel-loader/lib/index.js:103:36)
+> > ```
+> >
+> > 经过搜索，发现只需修改 ~/桌面/CloudNativePython/node\_modules/babel-loader/lib/index.js 文件中的第103行的代码即可:
+> >
+> > ```
+> > 原文件:
+> > var globalOptions = this.options.babel || {};
+> > 修改为:
+> > var globalOptions = this.options && this.options.babel || {};
+> > ```
+>
+> 完成以上动作后，需要做两项工作记得修改 app.py 中的路由:
+>
+> ```
+> @app.route('/index')
+> def index():
+>     return render_template('index.html')
 > ```
 
 
