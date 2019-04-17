@@ -172,7 +172,22 @@
 > ```
 >
 > 这样我们就定义了 React response 的基本结构。由于我们构建的是一个多视图的应用，因此需要使用一个工具来帮我们把所有资源文件\(包括 JavaScript、图片、字体和 CSS 等等\)打包放到一个独立的包文件中。
+
+## webpack\(补充\)
+
+> [https://www.cnblogs.com/liqiyuan/p/6246870.html](https://www.cnblogs.com/liqiyuan/p/6246870.html)
 >
+> 本尊对 webpack 的讲解蜻蜓点水，让俺无可奈何、一头雾水。因此，继 REACT 后，继续找点 webpack 的东东恶补一下。以下摘自 [https://www.webpackjs.com/concepts/ :](https://www.webpackjs.com/concepts/)
+>
+> 本质上，_webpack _是一个现代 JavaScript 应用程序的_静态模块打包器\(module bundler\)_。当 webpack 处理应用程序时，它会递归地构建一个_依赖关系图\(dependency graph\)_，其中包含应用程序需要的每个模块，然后将所有这些模块打包成一个或多个 _bundle_。
+>
+> **webpack 的四个核心概念**:
+>
+> * entry
+> * output
+> * loader
+> * plugins
+
 > 下面我们就用 Webpack 来完成这一工作，继续之前得需要先安装这个工具。
 >
 > ```
