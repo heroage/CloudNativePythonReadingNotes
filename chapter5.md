@@ -170,7 +170,7 @@
 >   }
 > }
 > ```
-
+>
 > 这样我们就定义了 React response 的基本结构。由于我们构建的是一个多视图的应用，因此需要使用一个工具来帮我们把所有资源文件\(包括 JavaScript、图片、字体和 CSS 等等\)打包放到一个独立的包文件中。
 >
 > 下面我们就用 Webpack 来完成这一工作，继续之前得需要先安装这个工具。
@@ -264,6 +264,7 @@
 > > ```
 > > 原文件:
 > > var globalOptions = this.options.babel || {};
+> >
 > > 修改为:
 > > var globalOptions = this.options && this.options.babel || {};
 > > ```
