@@ -175,9 +175,11 @@
 
 ## webpack\(补充\)
 
-> [https://www.cnblogs.com/liqiyuan/p/6246870.html](https://www.cnblogs.com/liqiyuan/p/6246870.html)
+> 尊对 webpack 的讲解蜻蜓点水，让俺无可奈何、一头雾水。因此，继 REACT 后，还是得找点 webpack 的东东恶补一下。
 >
-> 本尊对 webpack 的讲解蜻蜓点水，让俺无可奈何、一头雾水。因此，继 REACT 后，继续找点 webpack 的东东恶补一下。以下摘自 [https://www.webpackjs.com/concepts/ :](https://www.webpackjs.com/concepts/)
+> 找到个一个深入浅出的 webpack 视频教程，虽然是收费的，但前面几段免费的内容也足够对 webpack  有点认识了: [https://biaoyansu.com/21.x](https://biaoyansu.com/21.x)
+>
+> 以下摘自 [https://www.webpackjs.com/concepts/ :](https://www.webpackjs.com/concepts/)
 >
 > 本质上，_webpack _是一个现代 JavaScript 应用程序的_静态模块打包器\(module bundler\)_。当 webpack 处理应用程序时，它会递归地构建一个_依赖关系图\(dependency graph\)_，其中包含应用程序需要的每个模块，然后将所有这些模块打包成一个或多个 _bundle_。
 >
@@ -187,7 +189,7 @@
 > * output
 > * loader
 > * plugins
-
+>
 > 下面我们就用 Webpack 来完成这一工作，继续之前得需要先安装这个工具。
 >
 > ```
