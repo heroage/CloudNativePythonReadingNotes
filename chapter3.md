@@ -462,8 +462,7 @@
 >         Your name seems to be <strong>{{session['name']}}</strong>.
 >        <br/> 
 >         {% else %} 
->         Please set username by clicking it <a href="{{ 
->         url_for('addname') }}">here</a>.<br/> 
+>         Please set username by clicking it <a href="{{ url_for('addname') }}">here</a>.<br/>
 >         {% endif %} 
 >        Visit <a href="{{ url_for('adduser') }}">this for adding new 
 >        application user </a> or <a href="{{ url_for('addtweets') 
