@@ -175,11 +175,13 @@
 
 ## webpack\(补充\)
 
-> 尊对 webpack 的讲解蜻蜓点水，让俺无可奈何、一头雾水。因此，继 REACT 后，还是得找点 webpack 的东东恶补一下。
+> 本尊对 webpack 的讲解蜻蜓点水，让俺无可奈何、一头雾水。因此，继 REACT 后，还是得找点 webpack 的东东恶补一下。
+>
+> > 从各处得来的信息理解， webpack 最大的作用就是为了解决各类资源\(js、css……\)之间混乱的引用关系。举个例子来说，如果一个 index.html 需要引用 a.js，而 a.js 又依赖 b.js，则 index.html 需要同时引入 a.js 和 b.js。如果这种依赖关系树很复杂，无疑对前端人员来说是一种灾难。另外，还有如果 a.js 和 b.js 之间如果要共享信息，目前可行、方便的方式是通过 windows.variable 这类全局变量来传递，这就完全破坏了模块间的封装性，为后续的开发带来了无尽的混乱。而 webpack 通过将众多互相依赖的资源打包成一个或几类资源文件，在前端文件引用时，只需要引入一个打包文件\(如 bundle.js\)即可，很好地解决了上述问题。
 >
 > 找到个一个深入浅出的 webpack 视频教程，虽然是收费的，但前面几段免费的内容也足够对 webpack  有点认识了: [https://biaoyansu.com/21.x](https://biaoyansu.com/21.x)
 >
-> 以下摘自 [https://www.webpackjs.com/concepts/ :](https://www.webpackjs.com/concepts/)
+> 以下的概念主要摘自 [https://www.webpackjs.com/concepts/](https://www.webpackjs.com/concepts/)，也对其他来源的信息进行了稍许整理:
 >
 > 本质上，_webpack _是一个现代 JavaScript 应用程序的_静态模块打包器\(module bundler\)_。当 webpack 处理应用程序时，它会递归地构建一个_依赖关系图\(dependency graph\)_，其中包含应用程序需要的每个模块，然后将所有这些模块打包成一个或多个 _bundle_。
 >
@@ -189,6 +191,42 @@
 > * output
 > * loader
 > * plugins
+>
+> > **entry**: 表示webpack编译的入口文件，通常由html通过script标签引入。
+> >
+> > **output**: webpack 编译的输出文件\(bundle\)
+> >
+> > _**loader**: _让 webpack 能够去处理那些非 JavaScript 文件（webpack 自身只理解 JavaScript）。loader 可以将所有类型的文件转换为 webpack 能够处理的有效[模块](https://www.webpackjs.com/concepts/modules)，然后你就可以利用 webpack 的打包能力，对它们进行处理。\(loader 可以将文件从不同的语言（如 TypeScript）转换为 JavaScript，或将内联图像转换为 data URL，或者将CSS文件、markdown等非js文件转换为js文件并`require`进来。\)
+> >
+> > 以下面的 webpack.config.js 文件内容为例:
+> >
+> > ```
+> > module.exports = {
+> >     entry: "./static/main.js",
+> >     output: {
+> >         path: __dirname + "/static/build/",
+> >         filename: "bundle.js"
+> >     },
+> >     resolve: {
+> >         extensions: ['.js', '.jsx']
+> >     },
+> >     module: {
+> >         rules: [
+> >               { 
+> >                 test: /\.js$/, 
+> >                 loader: 'babel-loader' 
+> >               }, 
+> >               { 
+> >                 test: /\.(png|jpg|gif|svg)$/,
+> >                 loader: 'file-loader',
+> >                 options: { name: '[name].[ext]?[hash]'}
+> >               }
+> >         ]
+> >     }
+> > };
+> > ```
+> >
+> > 其中的 module/rules 是一个 list 变量，其中的 loader 属性表示使用哪个装载器，而 test 属性则是告知 webpack 编译器，遇到 require 或 import 语句时，只要其路径可以匹配正则表达式\(此处为 /\.js$/\)，就得使用 loader 属性对应的装载器\(此处为 babel-loader\)处理\(babel 是一个 js 编译器，可以将 es6+ 转换成 es5，以便现在的浏览器能够正确执行编写的 JavaScript\)。
 >
 > 下面我们就用 Webpack 来完成这一工作，继续之前得需要先安装这个工具。
 >
@@ -207,7 +245,9 @@
 > ```
 >
 > **Webpack 作用图解**![](/img/05.webpack作用图解.png)
->
+
+
+
 > Webpack 会读入一个独立的 .js 入口文件\(本书中入口文件名为 webpack.config.js 文件中定义的 entry 值，即 ./static/main.js\)，并从入口文件中按相关配置读取子组件，然后将这些子组件转换成独立的 .js 文件\(在 webpack.config.js 文件 output 中设置\)。
 >
 > > 书中对 Webpack 的说明实在是云遮雾罩，所以还是从别处摘抄一段\([https://segmentfault.com/a/1190000006178770](https://segmentfault.com/a/1190000006178770)\)，结合上面的图示就很好理解了:
