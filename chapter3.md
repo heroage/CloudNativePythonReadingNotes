@@ -450,8 +450,7 @@
 > <html> 
 >   <head> 
 >     <title>Twitter App Demo</title> 
->     <link rel=stylesheet type=text/css href="{{ url_for('static', 
->     filename='style.css') }}"> 
+>     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}" /> 
 > </head> 
 > <body> 
 >     <div id="container"> 
@@ -558,8 +557,6 @@
 >   response.set_cookie('cookie_name',value='values') 
 >   cookie = request.cookies.get('my_cookie')
 >   return response
->
->
 > ```
 
 

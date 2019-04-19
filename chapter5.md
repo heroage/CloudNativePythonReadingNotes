@@ -196,7 +196,7 @@
 > >
 > > **output**: webpack 编译的输出文件\(bundle\)
 > >
-> > _**loader**: _让 webpack 能够去处理那些非 JavaScript 文件（webpack 自身只理解 JavaScript）。loader 可以将所有类型的文件转换为 webpack 能够处理的有效[模块](https://www.webpackjs.com/concepts/modules)，然后你就可以利用 webpack 的打包能力，对它们进行处理。\(loader 可以将文件从不同的语言（如 TypeScript）转换为 JavaScript，或将内联图像转换为 data URL，或者将CSS文件、markdown等非js文件转换为js文件并`require`进来。\)
+> > _**loader**: _让 webpack 能够去处理那些非 JavaScript 文件（webpack 自身只理解 JavaScript）。loader 可以将所有类型的文件转换为 webpack 能够处理的有效[模块](https://www.webpackjs.com/concepts/modules)，然后你就可以利用 webpack 的打包能力，对它们进行处理。\(loader 可以将文件从不同的语言（如 TypeScript）转换为 JavaScript，或将内联图像转换为 data URL，或者将CSS文件、markdown等非 js 文件转换为 js 文件并`require`进来\)
 > >
 > > 以下面的 webpack.config.js 文件内容为例:
 > >
