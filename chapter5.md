@@ -226,7 +226,7 @@
 > > };
 > > ```
 > >
-> > 其中的 module/rules 是一个 list 变量，其中的 loader 属性表示使用哪个装载器，而 test 属性则是告知 webpack 编译器，遇到 require 或 import 语句时，只要其路径可以匹配正则表达式\(此处为 /\.js$/\)，就得使用 loader 属性对应的装载器\(此处为 babel-loader\)处理\(babel 是一个 js 编译器，可以将 es6+ 转换成 es5，以便现在的浏览器能够正确执行编写的 JavaScript\)。
+> > 其中的 module/rules 是一个 list 变量，其中的 loader 属性表示使用哪个装载器，而 test 属性的值是正则表达式，用于告知 webpack 编译器，当遇到 require 或 import 语句时，只要其路径可以匹配正则表达式\(此处为 /.js$/\)时，就得使用 loader 属性对应的装载器\(此处为 babel-loader\)处理\(babel 是一个 js 编译器，可以将 es6+ 转换成 es5，以便现在的浏览器能够正确执行编写的 JavaScript\)。
 >
 > 下面我们就用 Webpack 来完成这一工作，继续之前得需要先安装这个工具。
 >
@@ -245,9 +245,7 @@
 > ```
 >
 > **Webpack 作用图解**![](/img/05.webpack作用图解.png)
-
-
-
+>
 > Webpack 会读入一个独立的 .js 入口文件\(本书中入口文件名为 webpack.config.js 文件中定义的 entry 值，即 ./static/main.js\)，并从入口文件中按相关配置读取子组件，然后将这些子组件转换成独立的 .js 文件\(在 webpack.config.js 文件 output 中设置\)。
 >
 > > 书中对 Webpack 的说明实在是云遮雾罩，所以还是从别处摘抄一段\([https://segmentfault.com/a/1190000006178770](https://segmentfault.com/a/1190000006178770)\)，结合上面的图示就很好理解了:
