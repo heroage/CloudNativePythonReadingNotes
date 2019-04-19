@@ -185,7 +185,7 @@
 >
 > 要将这里的 app.js 添加到页面脚本中，才能实现双向数据绑定。因此需要在 templates/adduser.html 的 script 标签中添加一行:
 >
-> ```js
+> ```
 > <script src="{{ url_for('static', filename='app.js') }}"></script>
 > ```
 
