@@ -465,13 +465,10 @@
 >         Please set username by clicking it <a href="{{ url_for('addname') }}">here</a>.<br/>
 >         {% endif %} 
 >        Visit <a href="{{ url_for('adduser') }}">this for adding new 
->        application user </a> or <a href="{{ url_for('addtweets') 
->        }}">this to add new tweets</a> page to interact with RESTFUL
->        API. 
+>        application user </a> or <a href="{{ url_for('addtweets') }}">this to add new tweets</a> page to interact with RESTFUL API. 
 >
 >        <br /><br /> 
->        <strong><a href="{{ url_for('clearsession') }}">Clear 
->        session</a></strong> 
+>        <strong><a href="{{ url_for('clearsession') }}">Clear session</a></strong> 
 >         </div> 
 >         </div> 
 >     </div> 
