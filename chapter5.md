@@ -177,9 +177,9 @@
 
 > 本尊对 webpack 的讲解蜻蜓点水，让俺无可奈何、一头雾水。因此，继 REACT 后，还是得找点 webpack 的东东恶补一下。
 >
-> > 从各处得来的信息理解， webpack 最大的作用就是为了解决各类资源\(js、css……\)之间混乱的引用关系。举个例子来说，如果一个 index.html 需要引用 a.js，而 a.js 又依赖 b.js，则 index.html 需要同时引入 a.js 和 b.js。如果这种依赖关系树很复杂，无疑对前端人员来说是一种灾难。另外，还有如果 a.js 和 b.js 之间如果要共享信息，目前可行、方便的方式是通过 windows.variable 这类全局变量来传递，这就完全破坏了模块间的封装性，为后续的开发带来了无尽的混乱。而 webpack 通过将众多互相依赖的资源打包成一个或几类资源文件，在前端文件引用时，只需要引入一个打包文件\(如 bundle.js\)即可，很好地解决了上述问题。
+> > 从各处得来的信息理解， webpack 最大的作用就是为了解决各类资源\(js、css……\)之间混乱的引用关系。举个例子来说，如果一个 index.html 需要引用 a.js，而 a.js 又依赖 b.js，则 index.html 需要同时引入 a.js 和 b.js。如果这种依赖关系树很复杂，无疑对前端人员来说是一种灾难。另外，还有如果 a.js 和 b.js 之间如果要共享信息，目前可行、方便的方式是通过 windows.variable 这类全局变量来传递，这就完全破坏了模块间的封装性，为后续的开发带来了无尽的混乱。而 webpack 通过将众多互相依赖的资源\(如 .js、.css 等等\)打包成一个或几类资源文件，在前端文件引用时，只需要引入一个打包文件\(如 bundle.js\)即可，很好地解决了上述问题。
 >
-> 找到个一个深入浅出的 webpack 视频教程，虽然是收费的，但前面几段免费的内容也足够对 webpack  有点认识了: [https://biaoyansu.com/21.x](https://biaoyansu.com/21.x)
+> 找到个一个深入浅出的 webpack 视频教程，虽然是收费的，但前面几段免费的内容也足够对 webpack  有些认识: [https://biaoyansu.com/21.x](https://biaoyansu.com/21.x)
 >
 > 以下的概念主要摘自 [https://www.webpackjs.com/concepts/](https://www.webpackjs.com/concepts/)，也对其他来源的信息进行了稍许整理:
 >
@@ -198,13 +198,19 @@
 > >
 > > _**loader**: _让 webpack 能够去处理那些非 JavaScript 文件（webpack 自身只理解 JavaScript）。loader 可以将所有类型的文件转换为 webpack 能够处理的有效[模块](https://www.webpackjs.com/concepts/modules)，然后你就可以利用 webpack 的打包能力，对它们进行处理。\(loader 可以将文件从不同的语言（如 TypeScript）转换为 JavaScript，或将内联图像转换为 data URL，或者将CSS文件、markdown等非 js 文件转换为 js 文件并`require`进来\)
 > >
+> > **plugins**: loader 的作用是将相关的非 js 文件转换成 webpack 能处理的有效模块，即用来对输入标准化，而 plugins 的作用则是定制 webpack 的编译输出。想要使用一个插件，你只需要 require\(\) 它，然后把它添加到 plugins 列表中。
+> >
 > > 以下面的 webpack.config.js 文件内容为例:
 > >
 > > ```
+> > const HtmlWebpackPlugin = require('html-webpack-plugin');
+> > const webpack = require('webpack');
+> > const path = require('path');
+> >
 > > module.exports = {
 > >     entry: "./static/main.js",
 > >     output: {
-> >         path: __dirname + "/static/build/",
+> >         path: path.resolve(__dirname + "/static/build/"),
 > >         filename: "bundle.js"
 > >     },
 > >     resolve: {
@@ -221,8 +227,17 @@
 > >                 loader: 'file-loader',
 > >                 options: { name: '[name].[ext]?[hash]'}
 > >               }
+> >               { 
+> >                  test: /\.txt$/, use: 'raw-loader' 
+> >               }
 > >         ]
 > >     }
+> >     plugins: [
+> >       //压缩js插件
+> >       new webpack.optimize.UglifyJsPlugin(),
+> >       //以index.html文件为模板生成html5新文件
+> >       new HtmlWebpackPlugin({template: './src/index.html'})
+> >     ]
 > > };
 > > ```
 > >
@@ -242,6 +257,9 @@
 >
 > # 安装到你的项目目录
 > $ npm install --save-dev webpack
+> # 或
+> $ npm i -D
+> # 这时的 webpack 在 ./node_modules/.bin 目录下
 > ```
 >
 > **Webpack 作用图解**![](/img/05.webpack作用图解.png)
@@ -252,7 +270,7 @@
 > >
 > > WebPack可以看做是**模块打包机**，它做的事情是: 分析你的项目结构，找到JavaScript模块以及其它的一些浏览器不能直接运行的拓展语言（Scss，TypeScript等），并将其转换和打包为合适的格式供浏览器使用。
 > >
-> > Webpack的工作方式是：把你的项目当做一个整体，通过一个给定的主文件（如：index.js），Webpack将从这个文件开始找到你的项目的所有依赖文件，使用loaders处理它们，最后打包为一个（或多个）浏览器可识别的JavaScript文件。
+> > Webpack的工作方式是：把你的项目当做一个整体，通过一个给定的主文件（如：index.js），Webpack将从这个文件开始找到你的项目的所有依赖文件，使用 loaders 引入它们，最后打包为一个（或多个）浏览器可识别的 JavaScript 等文件。
 >
 > 以下为 webpack.config.js 的配置:
 >
