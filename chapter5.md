@@ -349,6 +349,68 @@
 > def index():
 >     return render_template('index.html')
 > ```
+>
+> 另外，修改 ./static/index.html，插入一行:
+>
+> ```
+> <script type="text/javascript" src="./static/build/bundle.js"></script>
+> ```
+>
+> 完成以上这些修改之后，就可以通过 http://localhost:5000/index 来访问构建的页面了。
+>
+> 接下来继续修改 ./static/main.js 文件，将其中 render 函数的 &lt;Main /&gt; 修改为 &lt;Tweet /&gt;:
+>
+> ```
+> import Tweet from "./components/Tweet";
+> class Main extends React.Component{
+>   render(){
+>     return (
+>       <div>
+>         <h1>Welcome to cloud-native-app!</h1>
+>       </div>
+>     );
+>   }
+> }
+>
+>
+> let documentReady =() =>{
+>   ReactDOM.render(
+>     <Tweet />,
+>     document.getElementById('react')
+>   );
+> };
+>
+> $(documentReady);
+> ```
+>
+> 修改完再访问 http://localhost:5000/index，会看到一个很简陋的页面。为了让页面更加的赏心悦目，我们引入几个 Materialize 的 CSS，在 index.html 中插入以下代码:
+>
+> ```
+>     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
+>     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
+> ```
+>
+> 并修改 ./static/components/Tweet.js，为页面元素增加样式:
+>
+> ```
+> export default class Tweet extends React.Component {
+>   render() {
+>     return (
+>       <div className="row">
+>         <nav>
+>           <form>
+>             <div className="row">
+>               <textarea ref="tweetTextArea" className="materialize-textarea" />
+>               <label>How you doing?</label>
+>               <button className="btn waves-effect waves-light right">Tweet now<i className="material-icorns right">send</i></button>
+>             </div>
+>           </form>
+>         </nav>
+>       </div>
+>     );
+>   }
+> }
+> ```
 
 
 
