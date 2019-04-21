@@ -356,7 +356,7 @@
 > <script type="text/javascript" src="./static/build/bundle.js"></script>
 > ```
 >
-> 完成以上这些修改之后，就可以通过 http://localhost:5000/index 来访问构建的页面了。
+> 完成以上这些修改之后，就可以通过 [http://localhost:5000/index](http://localhost:5000/index) 来访问构建的页面了。
 >
 > 接下来继续修改 ./static/main.js 文件，将其中 render 函数的 &lt;Main /&gt; 修改为 &lt;Tweet /&gt;:
 >
@@ -383,7 +383,7 @@
 > $(documentReady);
 > ```
 >
-> 修改完再访问 http://localhost:5000/index，会看到一个很简陋的页面。为了让页面更加的赏心悦目，我们引入几个 Materialize 的 CSS，在 index.html 中插入以下代码:
+> 修改完再访问 [http://localhost:5000/index，会看到一个很简陋的页面。为了让页面更加的赏心悦目，我们引入几个](http://localhost:5000/index，会看到一个很简陋的页面。为了让页面更加的赏心悦目，我们引入几个) Materialize 的 CSS，在 index.html 的 script 段中插入以下代码:
 >
 > ```
 >     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css">
