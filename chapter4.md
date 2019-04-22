@@ -361,7 +361,7 @@
 >     app.run(host='0.0.0.0', port=5000, debug=True)
 > ```
 >
-> 到这里，微服务的构建基本完毕，但在代码执行过程中发现，/addtweets、/adduser 返回的浏览器页面中，列表为空。这一问题，不知为何，即使全部使用了 https://github.com/PacktPublishing/Cloud-Native-Python 的源代码，仍不能解决。现在就不在此处纠结了，回头再说吧。
+> 到这里，微服务的构建基本完毕，但在代码执行过程中发现，/addtweets、/adduser 返回的浏览器页面中，列表为空。这一问题，不知为何，即使全部使用了 [https://github.com/PacktPublishing/Cloud-Native-Python](https://github.com/PacktPublishing/Cloud-Native-Python) 的源代码，仍不能解决。现在就不在此处纠结了，回头再说吧。
 
 
 
